@@ -10,152 +10,113 @@
     body { background-color: #ffffff; color: #000000; font-family: 'Zen Maru Gothic', 'Kosugi Maru', sans-serif; }
     .highlight { color: #ffd700; }
     .hero-text { text-align: center; background: #000; color: #fff; padding: 40px 20px; }
-    .section { padding: 60px 0; }
+    .section { padding: 48px 0; }
     footer { background: #000; color: white; padding: 30px 0; text-align: center; }
     .btn-yellow { background-color: #ffd700; color: #000000; border: none; }
     .btn-yellow:hover { background-color: #e6c200; color: #000000; }
-    .table>:not(caption)>*>*{ padding: 1rem 1rem; }
 
-    /* スマホ向け（PCは現状維持） */
-    @media (max-width: 576px){
-      body{ font-size: 15.5px; line-height: 1.75; }
-      .container{ padding-left:16px; padding-right:16px; }
-      .section{ padding: 44px 0; }
-      .btn-lg{ width:100%; }
-    }
-      /* === PC向けの折り返し最適化（モニターサイズ想定） === */
-    @media (min-width: 768px){
-      /* 日本語の不自然な改行を抑制しつつ、読みやすい改行を優先 */
-      p, li, dd{ word-break: keep-all; overflow-wrap: normal; line-break: strict; text-wrap: pretty; }
-      /* 見出しはバランス良く折り返す */
-      h1,.h1,h2,.h2{ text-wrap: balance; }
-    }
-      /* フッター文面とリンク色（メインページと統一） */
-    .footer-note, .footer-note a { color:#fff !important; }
+    /* 縦スクロール前提の読みやすい縦並び */
+    .container-narrow{ max-width: 760px; }
+    dl.stack{ margin:0; }
+    dl.stack dt{ color:#555; font-weight:700; margin-top:16px; }
+    dl.stack dd{ margin-left:0; margin-bottom:8px; }
+    ul.stack-list, ol.stack-list{ padding-left: 1.2rem; margin:0; }
+    ul.stack-list li, ol.stack-list li{ padding:12px 0; border-top:1px solid #eee; }
+    ul.stack-list li:first-child, ol.stack-list li:first-child{ border-top:none; }
+      /* 行間を狭める（サークル参加条件のリスト専用） */
+    .stack-list.tight li, .stack-list.tight li * { line-height: 1.35; }
+    .stack-list.tight li { padding: 6px 0; }
   </style>
 </head>
 <body>
-  <!-- ヒーロー（元ページに準拠した黒帯） -->
+  <!-- ヒーロー（テキスト帯） -->
   <header>
     <div class="hero-text">
-      <div class="container">
-        <h1 class="h2 fw-bold mb-2">参加要項</h1>
-        <p class="mb-0">本ページは <span class="highlight">「キスもろくにできねェの？」</span> Webオンリーイベントの参加ルール・提出仕様をまとめたものです。</p>
+      <div class="container container-narrow">
+        <p class="mb-0">本ページはスモロWebオンリーイベント<br><span class="highlight">「キスもろくにできねェの？」</span> のサークル参加ルールをまとめたものです。<br>
+        以下すべての項目に目を通し、ご了承いただける方のみご参加ください。</p>
       </div>
     </div>
   </header>
 
-  <!-- 基本ルール -->
+  <!-- サークル参加条件：縦箇条書き -->
   <section class="section">
-    <div class="container">
-      <h2 class="mb-3 h4">1. 基本ルール</h2>
-      <ul>
-        <li>本イベントは <strong>ONE PIECE・スモーカー×ロー（スモロ）</strong> を中心とした二次創作Webオンリーです。</li>
-        <li>二次創作の性質上、原作・出版社とは無関係の<strong>非公式ファン企画</strong>です。</li>
-        <li>各種法令・プラットフォーム規約・著作権に配慮した作品のみご参加ください。</li>
+    <div class="container container-narrow">
+      <h2 class="mb-3 h4">サークル参加条件</h2>
+
+      <p class="mb-2">以下すべてに該当する方がご参加いただけます</p>
+        <li>18歳以上の<strong>成人の方</strong></li>
+        <li><strong>スモーカー×ローまたはスモーカー+ローの創作物</strong>（漫画・小説・イラスト・ツイログ・コスプレ写真等）
+          <br>（頒布・展示はBOOTH / Pixiv / Privatter / Xfolio / 個人サイト等、任意の媒体をご使用ください）</li>
+        <li><strong>参加費</strong>（システム利用料770円）を支払える方</li>
+        <li>下記<strong>禁止事項・注意事項</strong>をご了承いただける方</li>
       </ul>
     </div>
   </section>
 
-  <!-- サークル参加条件と手順 -->
+    <!-- 禁止事項：縦箇条書き -->
   <section class="section bg-light">
-    <div class="container">
-      <h2 class="mb-3 h4">2. サークル参加の条件・手順</h2>
-      <div class="row g-4">
-        <div class="col-lg-6">
-          <h3 class="h5">条件</h3>
-          <ul class="mb-4">
-            <li>募集期間：2025/08/21 〜 2025/10/31</li>
-            <li>参加費：770円（ピクリエ利用料）</li>
-            <li>一次・二次創作ともに可（公序良俗・各規約に反しない範囲）</li>
-          </ul>
-          <h3 class="h5">手順</h3>
-          <ol class="mb-0">
-            <li>本ページの要項を確認</li>
-            <li>下記「参加申し込み」ボタンからピクリエのイベントページへ</li>
-            <li>フォーム入力・決済（必要な場合）</li>
-            <li>サークルページの作成・作品登録</li>
-          </ol>
-        </div>
-        <div class="col-lg-6">
-          <h3 class="h5">提出物</h3>
-          <ul class="mb-0">
-            <li>サークル名／ペンネーム／連絡先</li>
-            <li>サークルカット（推奨 1200×800px / JPG, PNG）</li>
-            <li>紹介文（全角 200〜600字目安）</li>
-            <li>作品プレビュー画像・本文（必要に応じて外部ストア／SNSリンク可）</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 作品仕様 -->
-  <section class="section">
-    <div class="container">
-      <h2 class="mb-3 h4">3. 作品仕様</h2>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <h3 class="h6">推奨フォーマット</h3>
-          <ul>
-            <li>画像：JPG / PNG（長辺 1600px 程度を目安）</li>
-            <li>テキスト：UTF-8 / 改行・段落の見やすさにご配慮ください</li>
-            <li>外部リンク：BOOTH / Pixiv / X（旧Twitter）等は各規約に準拠</li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <h3 class="h6">表現ガイドライン</h3>
-          <ul>
-            <li>原作設定・読者配慮を尊重し、過度な暴力・差別表現は避けてください。</li>
-            <li>年齢制限が必要な作品は、プラットフォームの年齢確認ルールに従ってください。</li>
-            <li>未成年に相当する描写や違法・不適切な内容は登録できません。</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 禁止事項 -->
-  <section class="section bg-light">
-    <div class="container">
-      <h2 class="mb-3 h4">4. 禁止事項</h2>
-      <ul>
-        <li>著作権・商標権その他の権利を侵害する行為</li>
-        <li>法律・各プラットフォーム規約に反する行為</li>
-        <li>誹謗中傷、差別、なりすまし等の迷惑行為</li>
-        <li>無断転載・無断販売などの不正行為</li>
+    <div class="container container-narrow">
+      <h2 class="mb-3 h4">禁止事項</h2>
+      <ul class="stack-list">
+        <li>著作権・商標権等に違反する行為</li>
+        <li>AIによって生成された作品の頒布・展示</li>
+        <li>誹謗中傷・イベント運営を妨害する等の迷惑行為</li>
       </ul>
     </div>
   </section>
 
-  <!-- 免責・取り下げ -->
+  <!-- 注意事項：縦箇条書き -->
   <section class="section">
-    <div class="container">
-      <h2 class="mb-3 h4">5. 免責事項・作品の取り下げ</h2>
-      <ul>
-        <li>本イベントは非公式ファン企画です。原作者・出版社・権利者とは一切関係ありません。</li>
+    <div class="container container-narrow">
+      <h2 class="mb-3 h4">注意事項</h2>
+      <ul class="stack-list">
+        <li>成人向け(R18)作品は<strong>年齢確認ページ</strong>を挟む等の対応をお願いします</li>
+        <li>スモロ以外のカップリングや特殊嗜好などの要素を含む作品には<strong>注意書き</strong>のご配慮をお願いします</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 免責事項：縦箇条書き -->
+  <section class="section bg-light">
+    <div class="container container-narrow">
+      <h2 class="mb-3 h4">免責事項</h2>
+      <ul class="stack-list">
+        <li>本イベントは非公式ファンイベントです。原作者・出版社とは一切関係ありません。</li>
         <li>要項違反・権利侵害が疑われる場合、予告なく公開停止・修正依頼を行う場合があります。</li>
-        <li>トラブルが発生した場合、当事者間での解決を基本とし、主催は可能な範囲で対応します。</li>
+        <li>会期中のトラブルは当事者間での解決を基本とし、主催は可能な範囲で対応します。</li>
       </ul>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- 費用・定員・受付：DLではなく縦リストで羅列 -->
+  <section class="section">
+    <div class="container container-narrow">
+      <h2 class="mb-3 h4">定員・受付期間</h2>
+      <ul class="stack-list">
+        <li>募集サークル数：<strong>～50</strong>サークル（予定）</li>
+        <li>申込受付期間：2025年08月17日(日) 18:00 〜 <strong>2025年10月31日(金) 23:59 締切</strong></li>
+        <li>参加費支払期日：<strong>～2025年10月31日(金) 23:59</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA：ボタンも縦スクロール末尾に配置 -->
   <section class="section bg-light">
-    <div class="container text-center">
-      <div class="d-flex flex-wrap gap-2 justify-content-center">
-        <a class="btn btn-yellow btn-lg" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申し込み</a>
+    <div class="container container-narrow text-center">
+      <p class="mb-3">以上ご了承の上お申し込みください。</p>
+      <div class="d-flex flex-column gap-3 align-items-stretch">
+        <a class="btn btn-yellow btn-lg" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593">参加申込</a>
         <a class="btn btn-outline-dark btn-lg" href="./">トップページへ戻る</a>
       </div>
     </div>
   </section>
 
-  <!-- フッター -->
   <footer>
     <div class="container container-narrow">
       <p class="footer-note">本サイトは非公式ファンサイトです</p>
       <p class="footer-note">お問い合わせは主催 <a href="https://x.com/kissmolaw" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Xアカウント</a>
-      <br>または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p>
+        または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p>
     </div>
   </footer>
 </body>
