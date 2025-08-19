@@ -82,6 +82,19 @@
       /* 長いURLや英単語がはみ出さないように */
       a, p, li, dd{ overflow-wrap: anywhere; word-break: break-word; }
     }
+      /* コンパクトボタン（通常の約1/3サイズ、文字を囲う最小限の余白） */
+    .btn-compact{ padding: .25em .65em; font-size: .85rem; line-height: 1.2; border-radius: .4rem; }
+      /* ===== モバイル折り返し最適化（iPhone想定・PCは現状維持） ===== */
+    @media (max-width: 576px){
+      /* 日本語の不自然な改行を抑制 */
+      p, li, dd{ word-break: keep-all; overflow-wrap: normal; line-break: strict; }
+      /* ヒーローのリード文も美しく折り返す */
+      .hero-text .lead{ text-wrap: balance; }
+      /* 情報セクションの強制改行はスマホでは無効化して自然に回り込み */
+      #info dd br{ display:none; }
+      /* リンク文言は極力1語として扱い、必要時のみ折り返す */
+      .container a{ white-space: nowrap; overflow-wrap: anywhere; word-break: break-word; }
+    }
   </style>
 </head>
 <body>
@@ -97,7 +110,7 @@
         <p>サークル参加は
           <a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご一読の上お申し込みください</p>
         <div class="d-flex flex-wrap gap-2 justify-content-center">
-          <a class="btn btn-yellow btn-lg" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
+          <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
         </div>
       </div>
     </div>
@@ -143,7 +156,7 @@
 
       </dl>
       <div class="mt-3">
-        <a class="btn btn-yellow" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
+        <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
       </div>
     </div>
   </section>
