@@ -113,6 +113,17 @@
         overflow-wrap: normal;      /* 勝手な折返しを無効化 */
       }
     }
+      /* スマホ専用：参加要項リンクを原子化（途中改行を完全禁止） */
+    @media (max-width: 576px){
+      .hero-text a[href$="requirements.html"],
+      #circle a[href$="requirements.html"],
+      a[href$="requirements.html"]{
+        display: inline-block;        /* 要素内で改行しない箱にする */
+        white-space: nowrap !important; /* 途中で折り返させない（最優先） */
+        word-break: keep-all;         /* CJKの途中分割を抑止 */
+        overflow-wrap: normal;        /* 勝手な折返しを無効化 */
+      }
+    }
   </style>
 </head>
 <body>
