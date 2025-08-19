@@ -103,6 +103,16 @@
       .hero-image{ overflow:hidden; }
       .hero-image img{ display:block; }
     }
+      /* スマホ専用：参加要項リンクの途中改行を禁止（iPhone想定） */
+    @media (max-width: 576px){
+      a[href$="requirements.html"],
+      #circle a[href$="requirements.html"],
+      .hero-text a[href$="requirements.html"]{
+        white-space: nowrap;        /* 途中で折り返さない */
+        word-break: keep-all;       /* CJKの途中分割を抑止 */
+        overflow-wrap: normal;      /* 勝手な折返しを無効化 */
+      }
+    }
   </style>
 </head>
 <body>
@@ -244,10 +254,11 @@
   // モバイル専用の改行整形（iPhone想定）
   (function(){
     const mql = window.matchMedia('(max-width: 576px)');
+
+    // --- 本イベントについて（#info） ---
     const dd = document.querySelector('#info dd.text-center');
-    if(!dd) return;
-    const original = dd.innerHTML;
-    const lines = [
+    const ddOriginal = dd ? dd.innerHTML : null;
+    const ddLines = [
       'スモロWebオンリー',
       '「キスもろくにできねェの？」は',
       'スモロ好きならどなたでも参加可能な',
@@ -258,13 +269,33 @@
       'どんな方でもどこにいても、',
       'スモロ好きなら大歓迎！'
     ];
+
+    // --- ヒーローの案内文 ---
+    const heroLink = document.querySelector('.hero-text a[href$="requirements.html"]');
+    const heroP = heroLink ? heroLink.closest('p') : null;
+    const heroOriginal = heroP ? heroP.innerHTML : null;
+    const heroLines = [
+      'サークル参加は',
+      '<a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご一読の上お申し込みください'
+    ];
+
     function apply(){
       if(mql.matches){
-        dd.classList.add('mb-break');
-        dd.innerHTML = lines.join('<br>');
+        if(dd && ddOriginal!=null){
+          dd.classList.add('mb-break');
+          dd.innerHTML = ddLines.join('<br>');
+        }
+        if(heroP && heroOriginal!=null){
+          heroP.innerHTML = heroLines.join('<br>');
+        }
       }else{
-        dd.classList.remove('mb-break');
-        dd.innerHTML = original;
+        if(dd && ddOriginal!=null){
+          dd.classList.remove('mb-break');
+          dd.innerHTML = ddOriginal;
+        }
+        if(heroP && heroOriginal!=null){
+          heroP.innerHTML = heroOriginal;
+        }
       }
     }
     apply();
