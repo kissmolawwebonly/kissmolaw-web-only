@@ -13,7 +13,7 @@
     .hero-image { position: relative; aspect-ratio: 16 / 9; min-height: clamp(360px, 60vh, 720px); width: 100%; overflow: hidden; background: #000; }
     .hero-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; filter: blur(18px); transform: scale(1.08); opacity: 0; transition: filter 1000ms ease, transform 1000ms ease, opacity 600ms ease; }
     .hero-image.is-ready img { filter: blur(0); transform: scale(1); opacity: 1; }
-    .hero-text { text-align: center; background: #000; color: #fff; padding: 40px 20px; }
+    .hero-text { text-align: center; background: #000; color: #fff; padding: 40px 20px; margin-top:-1px; position: relative; }
     .section { padding: 48px 0; }
     footer { background: #000; color: white; padding: 30px 0; text-align: center; }
     @media (prefers-reduced-motion: reduce) { .hero-image img { transition: none; filter: none; transform: none; opacity: 1; } }
@@ -41,7 +41,7 @@
     /* フッターの文面とリンクをすべて白に */
     .footer-note, .footer-note a { color: #fff !important; }
       /* ヒーロー下の1pxライン対策：下端を黒で覆う */
-    .hero-image::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:#000; }
+    .hero-image::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:2px; background:#000; z-index:2; }
       /* ヒーローの lead 段落間の行間を通常改行程度に調整 */
     .hero-text .lead{ margin-bottom: .25rem; line-height: 1.3; }
     .hero-text .lead + .lead{ margin-top: 0; }
@@ -83,7 +83,7 @@
       a, p, li, dd{ overflow-wrap: anywhere; word-break: break-word; }
     }
       /* コンパクトボタン（通常の約1/3サイズ、文字を囲う最小限の余白） */
-    .btn-compact{ padding: .375em .975em; font-size: 1.275rem; line-height: 1.2; border-radius: .45rem; }
+    .btn-compact{ display:inline-flex; align-items:center; justify-content:center; padding:.42em 1.05em; font-size: 1.275rem; line-height: 1; border-radius: .45rem; }
       /* ===== モバイル折り返し最適化（iPhone想定・PCは現状維持） ===== */
     @media (max-width: 576px){
       /* 日本語の不自然な改行を抑制 */
@@ -124,6 +124,8 @@
         overflow-wrap: normal;        /* 勝手な折返しを無効化 */
       }
     }
+      /* ヒーロー上部の下層を真っ黒に拡張してシーム回避 */
+    .hero-text::before{ content:""; position:absolute; left:0; right:0; top:-8px; height:8px; background:#000; z-index:1; }
   </style>
 </head>
 <body>
@@ -137,7 +139,7 @@
         <p class="lead">開催日：2025年11月21日(金) 21:00〜11月23日(日) 21:00</p>
         <p class="lead">場所：ピクリエ</p>
         <p>サークル参加は
-          <a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご一読の上お申し込みください</p>
+          <a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご確認の上お申し込みください</p>
         <div class="d-flex flex-wrap gap-2 justify-content-center">
           <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
         </div>
@@ -153,7 +155,7 @@
         <dd class="text-center">スモロWebオンリー「キスもろくにできねェの？」は 
         <br>スモロ好きならどなたでも参加可能なオンラインイベントです！
         <br>リアルイベントへの参加が難しい、普段は別界隈で楽しんでいる、海外に住んでいる、etc… 
-        <br>どんな方でもどこにいても、スモロ好きなら大歓迎！
+        <br>どんな方でもどこにいても、スモロ好きなら参加大歓迎！
         </dd>
       </dl>
     </div>
@@ -281,14 +283,28 @@
       'スモロ好きなら大歓迎！'
     ];
 
-    // --- ヒーローの案内文 ---
+    // --- ヒーローの案内文（参加要項） ---
     const heroLink = document.querySelector('.hero-text a[href$="requirements.html"]');
     const heroP = heroLink ? heroLink.closest('p') : null;
     const heroOriginal = heroP ? heroP.innerHTML : null;
     const heroLines = [
       'サークル参加は',
-      '<a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご一読の上お申し込みください'
+      '<a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご確認の上お申し込みください'
     ];
+
+    // --- ヒーローの開催日：1行→2行（〜 の前後で分割） ---
+    const heroDateP = Array.from(document.querySelectorAll('.hero-text .lead')).find(el => el.textContent.includes('開催日'));
+    const heroDateOriginal = heroDateP ? heroDateP.innerHTML : null;
+    let heroDateBroken = null;
+    if (heroDateP) {
+      const text = heroDateP.textContent.trim();
+      const idx = text.indexOf('〜');
+      if (idx > -1) {
+        const first = text.slice(0, idx).trim();
+        const second = text.slice(idx).trim(); // 先頭に 〜 を含む
+        heroDateBroken = `${first}<br>${second}`;
+      }
+    }
 
     function apply(){
       if(mql.matches){
@@ -299,6 +315,9 @@
         if(heroP && heroOriginal!=null){
           heroP.innerHTML = heroLines.join('<br>');
         }
+        if(heroDateP && heroDateOriginal!=null && heroDateBroken){
+          heroDateP.innerHTML = heroDateBroken;
+        }
       }else{
         if(dd && ddOriginal!=null){
           dd.classList.remove('mb-break');
@@ -306,6 +325,9 @@
         }
         if(heroP && heroOriginal!=null){
           heroP.innerHTML = heroOriginal;
+        }
+        if(heroDateP && heroDateOriginal!=null){
+          heroDateP.innerHTML = heroDateOriginal;
         }
       }
     }
