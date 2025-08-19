@@ -91,9 +91,17 @@
       /* ヒーローのリード文も美しく折り返す */
       .hero-text .lead{ text-wrap: balance; }
       /* 情報セクションの強制改行はスマホでは無効化して自然に回り込み */
-      #info dd br{ display:none; }
+      #info dd:not(.mb-break) br{ display: none; }
       /* リンク文言は極力1語として扱い、必要時のみ折り返す */
-      .container a{ white-space: nowrap; overflow-wrap: anywhere; word-break: break-word; }
+      .container a{ white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
+    }
+      /* ===== スマホ横スクロール無効化（iPhone想定） ===== */
+    @media (max-width: 576px){
+      html, body{ max-width:100%; overflow-x:hidden; }
+      header, section, footer, .container, .container-narrow{ max-width:100%; overflow-x:hidden; }
+      .row, .card, img{ max-width:100%; }
+      .hero-image{ overflow:hidden; }
+      .hero-image img{ display:block; }
     }
   </style>
 </head>
@@ -230,6 +238,38 @@
       });
     }, { threshold: 0.2 });
     seps.forEach(el=> io.observe(el));
+  })();
+  </script>
+  <script>
+  // モバイル専用の改行整形（iPhone想定）
+  (function(){
+    const mql = window.matchMedia('(max-width: 576px)');
+    const dd = document.querySelector('#info dd.text-center');
+    if(!dd) return;
+    const original = dd.innerHTML;
+    const lines = [
+      'スモロWebオンリー',
+      '「キスもろくにできねェの？」は',
+      'スモロ好きならどなたでも参加可能な',
+      'オンラインイベントです！',
+      'リアルイベントへの参加が難しい、',
+      '普段は別界隈で楽しんでいる、',
+      '海外に住んでいる、etc…',
+      'どんな方でもどこにいても、',
+      'スモロ好きなら大歓迎！'
+    ];
+    function apply(){
+      if(mql.matches){
+        dd.classList.add('mb-break');
+        dd.innerHTML = lines.join('<br>');
+      }else{
+        dd.classList.remove('mb-break');
+        dd.innerHTML = original;
+      }
+    }
+    apply();
+    if ('addEventListener' in mql) mql.addEventListener('change', apply);
+    else if ('addListener' in mql) mql.addListener(apply);
   })();
   </script>
 </body>
