@@ -95,7 +95,7 @@
     <div class="container container-narrow">
       <h2 class="mb-3 h4">免責事項</h2>
       <ul class="stack-list">
-        <li>本イベントは非公式ファンイベントです。原作者・出版社とは一切関係ありません。</li>
+        <li>本イベントは非公式ファンイベントです。原作者・権利者とは一切関係ありません。</li>
         <li>要項違反・権利侵害が疑われる場合、予告なく公開停止・修正依頼を行う場合があります。</li>
         <li>会期中のトラブルは当事者間での解決を基本とし、主催は可能な範囲で対応します。</li>
       </ul>
@@ -132,5 +132,28 @@
         または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p>
     </div>
   </footer>
+  <script>
+  // モバイル（iPhone想定）だけ、ヘッダー文言を指定の改行に整形
+  (function(){
+    const mql = window.matchMedia('(max-width: 576px)');
+    const heroP = document.querySelector('.hero-text .container p');
+    if(!heroP) return;
+    const original = heroP.innerHTML;
+    const lines = [
+      '本ページでは',
+      'スモロWebオンリーイベント <span class="highlight">「キスもろくにできねェの？」</span> の',
+      'サークル参加ルールをまとめています。',
+      '以下すべての項目に目を通し、',
+      'ご了承いただける方のみご参加ください。'
+    ];
+    function apply(){
+      if(mql.matches){ heroP.innerHTML = lines.join('<br>'); }
+      else{ heroP.innerHTML = original; }
+    }
+    apply();
+    if('addEventListener' in mql) mql.addEventListener('change', apply);
+    else if('addListener' in mql) mql.addListener(apply);
+  })();
+  </script>
 </body>
 </html>
