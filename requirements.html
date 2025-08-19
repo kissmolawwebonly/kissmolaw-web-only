@@ -26,6 +26,18 @@
       /* 行間を狭める（サークル参加条件のリスト専用） */
     .stack-list.tight li, .stack-list.tight li * { line-height: 1.35; }
     .stack-list.tight li { padding: 6px 0; }
+      /* === スマホ（iPhone想定）だけ折り返し最適化：PCは現状維持 === */
+    @media (max-width: 576px){
+      html{ -webkit-text-size-adjust:100%; }
+      body{ font-size:15.5px; line-height:1.75; }
+      .container-narrow{ padding-left:16px; padding-right:16px; }
+      /* 見出しは均等で美しい折返しに */
+      h1,.h1,h2,.h2{ text-wrap: balance; letter-spacing:.01em; }
+      /* 日本語の不自然な改行を抑制／自然な改行優先 */
+      p, li, dd{ word-break: keep-all; overflow-wrap: normal; line-break: strict; text-wrap: pretty; }
+      /* 長いURLや英語のみ安全に分割 */
+      a, p, li, dd{ overflow-wrap: anywhere; word-break: break-word; }
+    }
   </style>
 </head>
 <body>
@@ -43,14 +55,15 @@
   <section class="section">
     <div class="container container-narrow">
       <h2 class="mb-3 h4">サークル参加条件</h2>
-
       <p class="mb-2">以下すべてに該当する方がご参加いただけます</p>
-        <li>18歳以上の<strong>成人の方</strong></li>
-        <li><strong>スモーカー×ローまたはスモーカー+ローの創作物</strong>（漫画・小説・イラスト・ツイログ・コスプレ写真等）
+      <ol class="stack-list">
+<li>18歳以上の<strong>成人の方</strong></li>
+        <li><strong>スモーカー×ローまたはスモーカー+ローの創作物</strong>（漫画・小説・イラスト・ツイログ・コスプレ写真等）が1点以上ある方
           <br>（頒布・展示はBOOTH / Pixiv / Privatter / Xfolio / 個人サイト等、任意の媒体をご使用ください）</li>
         <li><strong>参加費</strong>（システム利用料770円）を支払える方</li>
         <li>下記<strong>禁止事項・注意事項</strong>をご了承いただける方</li>
-      </ul>
+      
+      </ol>
     </div>
   </section>
 
@@ -58,7 +71,7 @@
   <section class="section bg-light">
     <div class="container container-narrow">
       <h2 class="mb-3 h4">禁止事項</h2>
-      <ul class="stack-list">
+      <ol class="stack-list">
         <li>著作権・商標権等に違反する行為</li>
         <li>AIによって生成された作品の頒布・展示</li>
         <li>誹謗中傷・イベント運営を妨害する等の迷惑行為</li>
@@ -70,7 +83,7 @@
   <section class="section">
     <div class="container container-narrow">
       <h2 class="mb-3 h4">注意事項</h2>
-      <ul class="stack-list">
+      <ol class="stack-list">
         <li>成人向け(R18)作品は<strong>年齢確認ページ</strong>を挟む等の対応をお願いします</li>
         <li>スモロ以外のカップリングや特殊嗜好などの要素を含む作品には<strong>注意書き</strong>のご配慮をお願いします</li>
       </ul>
@@ -94,9 +107,9 @@
     <div class="container container-narrow">
       <h2 class="mb-3 h4">定員・受付期間</h2>
       <ul class="stack-list">
-        <li>募集サークル数：<strong>～50</strong>サークル（予定）</li>
+        <li>募集サークル数：<strong>50</strong>サークル（予定）</li>
         <li>申込受付期間：2025年08月17日(日) 18:00 〜 <strong>2025年10月31日(金) 23:59 締切</strong></li>
-        <li>参加費支払期日：<strong>～2025年10月31日(金) 23:59</strong></li>
+        <li>参加費支払期日：<strong>2025年10月31日(金) 23:59</strong></li>
       </ul>
     </div>
   </section>
