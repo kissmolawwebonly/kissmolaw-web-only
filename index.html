@@ -83,7 +83,17 @@
       a, p, li, dd{ overflow-wrap: anywhere; word-break: break-word; }
     }
       /* コンパクトボタン（通常の約1/3サイズ、文字を囲う最小限の余白） */
-    .btn-compact{ display:inline-flex; align-items:center; justify-content:center; padding:.42em 1.05em; font-size: 1.275rem; line-height: 1; border-radius: .45rem; }
+    .btn-compact{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;               /* テキストの幾何学的中心 */
+  padding:.42em 1.05em;        /* 上下左右を均等に */
+  border-radius:.45rem;
+  font-size:1.275rem;
+  vertical-align:middle;       /* インライン配置時のベースラインズレ抑制 */
+  transform: translateY(-1px); /* 視覚中心に合わせる微調整 */
+}
       /* ===== モバイル折り返し最適化（iPhone想定・PCは現状維持） ===== */
     @media (max-width: 576px){
       /* 日本語の不自然な改行を抑制 */
@@ -148,7 +158,7 @@
       <div class="container container-narrow">
         <p class="lead">開催日：2025年11月21日(金) 21:00〜11月23日(日) 21:00</p>
         <p class="lead">場所：ピクリエ</p>
-        <p>サークル参加は
+        <p>サークル参加ご希望の方は
           <a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご確認の上お申し込みください</p>
         <div class="d-flex flex-wrap gap-2 justify-content-center">
           <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
@@ -298,8 +308,9 @@
     const heroP = heroLink ? heroLink.closest('p') : null;
     const heroOriginal = heroP ? heroP.innerHTML : null;
     const heroLines = [
-      'サークル参加は',
-      '<a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>をご確認の上お申し込みください'
+      'サークル参加ご希望の方は',
+      '<a href="requirements.html" style="text-decoration: underline; color: #ffd700;" target="_blank" rel="noopener">参加要項</a>を',
+      'ご確認の上お申し込みください'
     ];
 
     // --- ヒーローの開催日：1行→2行（〜 の前後で分割） ---
