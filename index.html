@@ -10,7 +10,7 @@
     :root{ --brand-yellow:#ffd700; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; --steel-noise-url:none; --steel-vignette: rgba(0,0,0,.24); --steel-highlight: rgba(255,255,255,.10);} 
 body{ 
   /* Horizontal gradient: right (white) -> left (existing grey) */
-  background: linear-gradient(to right, #ffffff 0%, #ffffff 22%, var(--bg-plate-hi) 44%, var(--bg-plate-lo) 100%);
+  background: linear-gradient(to right, #ffffff 0%, #ffffff 28%, var(--bg-plate-hi) 52%, var(--bg-plate-lo) 100%);
   color:#111; 
 }
     .highlight { color: #ffd700; }
@@ -159,6 +159,12 @@ body{
     }
       /* 最新情報：先頭の「・」マーカーを非表示（見た目の余白は維持） */
     #news .stack-list{ list-style: none; }
+    /* shorten the divider lines between items in 最新情報 */
+    #news .stack-list li{ border-top:none; position:relative; }
+    #news .stack-list li + li::before{
+      content:""; position:absolute; top:0; height:1px; background:#eee;
+      left:1.2rem; right:1.2rem; /* shorter than full width, aligned with text */
+    }
     /* === Snow (powder) overlay === */
   #snow-canvas{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:50; display:block; }
   @media (prefers-reduced-motion: reduce){ #snow-canvas{ display:none; } }
