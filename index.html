@@ -149,7 +149,8 @@ body{
       /* === モバイル限定：メインページの参加申込ボタンを横長（全幅）に === */
     @media (max-width: 576px){
       .hero-text .btn-compact,
-      #circle .btn-compact{
+      #circle .btn-compact,
+      #info .btn-compact{
         display:flex;              /* 幅100%時もテキストを中央に */
         align-items:center;
         justify-content:center;
@@ -245,6 +246,10 @@ body{
   /* Center イメソン企画 & ワンドロ・ワンライ企画 cards vertically */
   #projects .card:nth-of-type(1) .row{ align-items:center; }
   #projects .card:nth-of-type(2) .proj-row{ align-items:center; }
+
+  /* Indent both terms (dt) and descriptions (dd) in サークル参加について */
+  #circle dl.stack{ --indent: 1rem; }
+  #circle dl.stack dt, #circle dl.stack dd{ padding-left: var(--indent); }
 
 </style>
 </head>
@@ -439,6 +444,7 @@ body{
     // --- 本イベントについて（#info） ---
     const dd = document.querySelector('#info dd.text-center');
     const ddOriginal = dd ? dd.innerHTML : null;
+    const infoBtnWrap = dd ? dd.querySelector('.btn.btn-yellow')?.closest('div') : null;
     const ddLines = [
       'スモロWebオンリー',
       '「キスもろくにできねェの？」は',
@@ -480,6 +486,7 @@ body{
         if(dd && ddOriginal!=null){
           dd.classList.add('mb-break');
           dd.innerHTML = ddLines.join('<br>');
+          if(infoBtnWrap){ dd.appendChild(infoBtnWrap); }
         }
         if(heroP && heroOriginal!=null){
           heroP.innerHTML = heroLines.join('<br>');
