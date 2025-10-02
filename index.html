@@ -331,6 +331,14 @@ body{
     #projects .info-item{ text-align:center; justify-content:center; }
   }
 
+  /* === Mobile: restore date-badge size & keep centered === */
+  @media (max-width:576px){
+    /* make two badges fill the row neatly and stay centered */
+    #projects .date-badges{ justify-content:center; gap:.75rem; }
+    /* each badge takes half of the row minus half the gap */
+    #projects .date-badge{ flex:0 0 calc(50% - .375rem); max-width:280px; }
+  }
+
 </style>
 </head>
 <body>
