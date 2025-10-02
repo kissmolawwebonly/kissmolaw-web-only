@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #ffffff; color: #000000; font-family: 'Zen Maru Gothic', 'Kosugi Maru', sans-serif; }
+    body { background-color: #ffffff; color: #000000; font-family: 'Zen Maru Gothic', 'Kosugi Maru', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
     .highlight { color: #ffd700; }
     .hero-text { text-align: center; background: #000; color: #fff; padding: 40px 20px; }
     .section { padding: 48px 0; }
@@ -38,7 +38,26 @@
       /* 長いURLや英語のみ安全に分割 */
       a, p, li, dd{ overflow-wrap: anywhere; word-break: break-word; }
     }
-  </style>
+    /* === CTA micro-interactions + typography (match index.html) === */
+  .btn-yellow.cta{ color:#fff !important; font-weight:600; text-shadow: 2px 2px 0 rgba(90,60,0,.62), 5px 5px 10px rgba(90,60,0,.60); transition: transform .12s ease; }
+  .btn-yellow.cta:hover, .btn-yellow.cta:focus{ color:#fff !important; text-shadow: 2px 2px 0 rgba(80,50,0,.72), 6px 6px 12px rgba(80,50,0,.68); }
+  .btn-yellow.cta:active{ transform: translateY(1px); }
+  .btn-yellow.cta .chev{ display:inline-block; margin-left:.5em; transform: translateX(0); transition: transform .12s ease; }
+  .btn-yellow.cta:hover .chev, .btn-yellow.cta:focus-visible .chev{ transform: translateX(2px); }
+
+  /* Match index.html: use same font stack for headings & buttons */
+  h1,h2,h3,h4,h5,h6,.btn{ font-family: 'Zen Maru Gothic', 'Kosugi Maru', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+
+  /* CTA style for black return button */
+  .btn-dark{ background-color:#5a5a5a; border-color:#5a5a5a; color:#fff; }
+  .btn-dark:hover{ background-color:#4b4b4b; border-color:#4b4b4b; color:#fff; }
+  .btn-dark.cta{ font-weight:600; transition: transform .12s ease; text-shadow: 1px 1px 0 rgba(0,0,0,.45), 0 0 2px rgba(0,0,0,.35); }
+  $1
+  .btn-dark.cta:hover, .btn-dark.cta:focus{ text-shadow: 1px 1px 0 rgba(0,0,0,.55), 0 0 3px rgba(0,0,0,.45); }
+  .btn-dark.cta:focus-visible{ outline:none; box-shadow: 0 0 0 3px rgba(255,255,255,.35); }
+
+
+</style>
 </head>
 <body>
   <!-- ヒーロー（テキスト帯） -->
@@ -107,9 +126,9 @@
     <div class="container container-narrow">
       <h2 class="mb-3 h4">定員・受付期間</h2>
       <ul class="stack-list">
-        <li>募集サークル数：<strong>50</strong>サークル（予定）</li>
-        <li>申込受付期間：2025年08月17日(日) 18:00 〜 <strong>2025年10月31日(金) 23:59 締切</strong></li>
-        <li>参加費支払期日：<strong>2025年10月31日(金) 23:59</strong></li>
+        <li>募集サークル数：80サークル（予定）</li>
+        <li>申込受付期間：2025年08月17日(日) 18:00 〜 2025年10月31日(金) 23:59 締切</li>
+        <li>参加費支払期日：2025年10月31日(金) 23:59</li>
       </ul>
     </div>
   </section>
@@ -119,8 +138,8 @@
     <div class="container container-narrow text-center">
       <p class="mb-3">以上ご了承の上お申し込みください。</p>
       <div class="d-flex flex-column gap-3 align-items-stretch">
-        <a class="btn btn-yellow btn-lg" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593">参加申込</a>
-        <a class="btn btn-outline-dark btn-lg" href="./">トップページへ戻る</a>
+        <a class="btn btn-yellow btn-lg cta" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593">参加申込</a>
+        <a class="btn btn-dark btn-lg cta" href="./">トップページへ戻る</a>
       </div>
     </div>
   </section>
