@@ -196,6 +196,26 @@ body{
     #projects .card{ border-radius: 14px; }
   }
 
+  /* === Project cards alignment tidy === */
+  /* unify vertical centering across all three cards on desktop */
+  #projects .card .row,
+  #projects .proj-row{ align-items:center; }
+  /* make columns flex containers so content can be truly middle-aligned */
+  #projects .card .col-md-7,
+  #projects .card .col-md-5{ display:flex; flex-direction:column; justify-content:center; }
+  /* stabilize inner spacing */
+  #projects .card .card-title{ margin-bottom:.35rem; }
+  #projects .card .card-text{ margin-bottom:.35rem; }
+  /* ensure thumbnail centers neatly */
+  .yt-card{ margin-left:auto; margin-right:auto; }
+
+  /* mobile: stack naturally (top-aligned) with consistent gaps */
+  @media (max-width:576px){
+    #projects .card .col-md-7,
+    #projects .card .col-md-5{ display:block; }
+    #projects .card .row > [class^="col-"]:not(:last-child){ margin-bottom:.5rem; }
+  }
+
   /* === Right-side enrichment for project cards === */
   /* Shared layout */
   .proj-row{ align-items:stretch; }
