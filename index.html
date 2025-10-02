@@ -38,8 +38,8 @@ body{
     @media (prefers-reduced-motion: reduce) { .hero-image img { transition: none; filter: none; transform: none; opacity: 1; } }
     .card { transition: transform 200ms ease, box-shadow 200ms ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
-    .btn-yellow { background-color: #ffd700; color: #000000; border: none; }
-    .btn-yellow:hover { background-color: #e6c200; color: #000000; }
+    .btn-yellow { background-color: #f0c200; color: #000000; border: none; }
+    .btn-yellow:hover { background-color: #d6aa00; color: #000000; }
     
 
     .card, .card .card-body{ background-color: var(--surface); }
@@ -339,6 +339,17 @@ body{
     #projects .date-badge{ flex:0 0 calc(50% - .375rem); max-width:280px; }
   }
 
+  /* === CTA text tweak: slightly bolder + white + right-down BROWN shadow === */
+  .btn-yellow.cta{
+    color:#fff !important;
+    font-weight:600; /* 500 → 600 で少し太く */
+    text-shadow: 1px 1px 0 rgba(120,80,0,.45), 3px 3px 6px rgba(120,80,0,.45);
+  }
+  .btn-yellow.cta:hover, .btn-yellow.cta:focus{
+    color:#fff !important;
+    text-shadow: 1px 1px 0 rgba(110,70,0,.55), 4px 4px 9px rgba(110,70,0,.55);
+  }
+
 </style>
 </head>
 <body>
@@ -368,7 +379,7 @@ body{
         <br>リアルイベントへの参加が難しい、普段は別界隈で楽しんでいる、海外に住んでいる、etc… 
         <br>どんな方でもどこにいても、スモロ好きなら参加大歓迎！
         <div class="mt-3 text-center">
-          <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">イベントページはこちら</a>
+          <a class="btn btn-yellow btn-compact cta" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">イベントページはこちら</a>
         </div>
         </dd>
       </dl>
@@ -403,7 +414,7 @@ body{
 
       </dl>
       <div class="mt-3">
-        <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
+        <a class="btn btn-yellow btn-compact cta" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">参加申込</a>
       </div>
     </div>
   </section>
