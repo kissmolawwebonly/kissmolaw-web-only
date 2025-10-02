@@ -305,6 +305,32 @@ body{
     .yt-card{ width:100%; max-width:560px; }
   }
 
+  /* === Mobile fine-tuning: center all contents in project cards and remove side gutter drift === */
+  @media (max-width:576px){
+    /* kill left/right gutters that visually push content */
+    #projects .card .row{ --bs-gutter-x: 0; }
+    #projects .card .card-body{ text-align:center; }
+    #projects .card .card-body > .row > [class^="col-"]{ padding-left:0; padding-right:0; }
+    /* center any list-like content */
+    #projects .info-list{ align-items:center; }
+    /* keep badges centered */
+    #projects .date-badges{ justify-content:center; }
+  }
+
+  /* === Mobile: force true center for YT thumbnail, date badges, and quiz text === */
+  @media (max-width:576px){
+    /* YTサムネ（イメソン）：中央寄せ＆横幅はカード内で自動調整 */
+    #projects .yt-card{ display:block; margin-left:auto; margin-right:auto; width:100%; max-width:560px; }
+    /* 日付バッジ（ワンドロ）：行も中身も中央 */
+    #projects .date-badges{ justify-content:center; }
+    #projects .date-badge{ flex:0 0 auto; }
+    /* テキスト（イベント内クイズ）：中央寄せ */
+    #projects .card .card-title,
+    #projects .card .card-text,
+    #projects .info-list,
+    #projects .info-item{ text-align:center; justify-content:center; }
+  }
+
 </style>
 </head>
 <body>
