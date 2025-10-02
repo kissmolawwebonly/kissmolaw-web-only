@@ -366,8 +366,10 @@ body{
         <dd class="text-center">スモロWebオンリー「キスもろくにできねェの？」は 
         <br>スモロ好きならどなたでも参加可能なオンラインイベントです！
         <br>リアルイベントへの参加が難しい、普段は別界隈で楽しんでいる、海外に住んでいる、etc… 
-        <br>どんな方でもどこにいても、スモロ好きなら参加大歓迎！</p>
-        <a class="btn btn-yellow btn-compact" href="https://picrea.jp/event/11bec72dc466196d94e2a84d10af5680c8ba0cc75ff7137b9f06fd06020b1593" target="_blank" rel="noopener">イベントページはこちら</a>
+        <br>どんな方でもどこにいても、スモロ好きなら参加大歓迎！
+        <div class="mt-3 text-center">
+          <a class="btn btn-yellow btn-compact"$1>イベントページはこちら</a>
+        </div>
         </dd>
       </dl>
     </div>
@@ -532,7 +534,8 @@ body{
     // --- 本イベントについて（#info） ---
     const dd = document.querySelector('#info dd.text-center');
     const ddOriginal = dd ? dd.innerHTML : null;
-    const infoBtnWrap = dd ? dd.querySelector('.btn.btn-yellow')?.closest('div') : null;
+    const infoBtn = dd ? dd.querySelector('.btn.btn-yellow') : null;
+    const infoBtnWrap = infoBtn ? (infoBtn.closest('div') || infoBtn) : null;
     const ddLines = [
       'スモロWebオンリー',
       '「キスもろくにできねェの？」は',
