@@ -18,7 +18,13 @@
   <!-- Fonts: keep same as index.html -->
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{ --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; }
+    :root{ --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; 
+  /* Responsive type scales */
+  --fs-title: clamp(1.05rem, 3.8vw, 1.25rem);
+  --fs-body: clamp(.95rem, 3.6vw, 1.05rem);
+  --fs-hint: clamp(.82rem, 3.2vw, .9rem);
+  --fs-btn: clamp(.95rem, 3.4vw, 1.05rem);
+}
     /* Match index.html background gradient: 左=白 → 右=グレー */
     body{ background: linear-gradient(to right, #ffffff 0%, #ffffff 28%, var(--bg-plate-hi) 52%, var(--bg-plate-lo) 100%); color:#111; }
     body{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
@@ -30,14 +36,23 @@
     header .brand{ display:flex; align-items:center; gap:.6rem; }
     header .brand img{ width:28px; height:28px; border-radius:50%; }
 header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:.01em; color:#fff; }
-@media (max-width:576px){ header .brand .brand-title{ font-size:1.35rem; } }
+@media (max-width:576px){
+  .btn-compact{ font-size:var(--fs-btn); padding:.55rem 1rem; min-height:44px; }
+  header .brand .brand-title{ font-size:clamp(1.15rem, 4.4vw, 1.25rem); }
+  .song-detail summary{ padding:.6rem .8rem; }
+  .song-detail .s-body{ padding:.8rem 1rem 2.3rem; }
+  .song-detail .s-body p{ line-height:1.9; }
+  .yt-badge-abs{ right:.75rem; bottom:.75rem; }
+  .container.container-narrow{ padding-left:16px; padding-right:16px; }
+  .card{ margin-left:auto; margin-right:auto; width:100%; }
+} }
 
     .section{ padding: 36px 0; position:relative; }
     .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); }
     .btn-yellow{ background-color:#ffd700; color:#000; border:none; }
     .btn-yellow.cta{ color:#000 !important; font-weight:700; text-shadow:none; font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
     .btn-yellow.cta:hover{ color:#fff !important; text-shadow: 1px 1px 0 rgba(110,70,0,.55), 4px 4px 9px rgba(110,70,0,.55); }
-    .btn-compact{ display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:.42em 1.05em; border-radius:.45rem; font-size:1.1rem; }
+    .btn-compact{ display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:.42em 1.05em; border-radius:.45rem; font-size:var(--fs-btn); min-height:44px; }
 
     /* Playlist hero */
     .yt-hero{ display:grid; grid-template-columns: 1.25fr .75fr; gap:16px; }
@@ -55,12 +70,12 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
     .song-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;border-radius:8px;background:rgba(0,0,0,.03);transition:background .25s ease;}      
     .song-detail summary::-webkit-details-marker{display:none;}
     .song-detail .chev{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #000;transform-origin:50% 40%;transition:transform .48s cubic-bezier(.25,.8,.25,1), border-top-color .48s ease-out;} 
-    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; font-size:.85rem; color:#666; line-height:1; }
+    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; font-size:var(--fs-hint); }
     .song-detail[open] .chev{transform:rotate(-180deg);}    
     .song-detail[open] .hint{opacity:0;} .song-detail[open]{background:rgba(0,0,0,.03);} .song-detail[open] summary{background:transparent;border-radius:8px 8px 0 0;}
     .song-detail .s-body{padding:.8rem 1rem 2.5rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;}       
     .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}  
-    .song-detail .s-body p{font-size:1rem; line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
+    .song-detail .s-body p{font-size:var(--fs-body); line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
     .song-detail .s-body .flex-fill{max-width:60ch;}
     .song-detail .s-body .d-flex{gap:1rem;}
     @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} }  
@@ -79,7 +94,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
     .smoro-tip{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;color:#fff;background:var(--brand-yellow);padding:.2rem .6rem;border-radius:9999px;letter-spacing:.02em;box-shadow:0 1px 3px rgba(0,0,0,.08);text-shadow:0 1px 0 rgba(80,40,0,.45),0 2px 4px rgba(80,40,0,.35);margin-left:1em;}
     @media (max-width:576px){ .yt-oembed{width:auto;} }
     /* 曲タイトルは Zen Maru Gothic を優先 */
-    .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-weight:700; letter-spacing:.01em; }
+    .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-weight:700; letter-spacing:.01em; font-size:var(--fs-title); }
     .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; }
 
     footer{ background:#000; color:#fff; padding:28px 0; margin-top:28px; position:relative; z-index:2; }
