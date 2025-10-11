@@ -20,7 +20,7 @@
   <style>
     :root{ --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; 
   /* Responsive type scales */
-  --fs-title: clamp(1.05rem, 3.8vw, 1.25rem);
+  --fs-title: clamp(0.98rem, 3.4vw, 1.15rem);
   --fs-body: clamp(.95rem, 3.6vw, 1.05rem);
   --fs-hint: clamp(.82rem, 3.2vw, .9rem);
   --fs-btn: clamp(.95rem, 3.4vw, 1.05rem);
@@ -38,17 +38,21 @@
 header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:.01em; color:#fff; }
 @media (max-width:576px){
   .btn-compact{ font-size:var(--fs-btn); padding:.55rem 1rem; min-height:44px; }
-  header .brand .brand-title{ font-size:clamp(1.15rem, 4.4vw, 1.25rem); }
-  .song-detail summary{ padding:.6rem .8rem; }
-  .song-detail .s-body{ padding:.8rem 1rem 2.3rem; }
-  .song-detail .s-body p{ line-height:1.9; }
-  .yt-badge-abs{ right:.75rem; bottom:.75rem; }
+  header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
+  .song-detail summary{ padding:.55rem .7rem; }
+  /* 文字との重なり防止：モバイル時はバッジを本文下・右寄せに流し込む */
+  .song-detail .s-body{ display:flex; flex-direction:column; padding:.7rem .9rem 1rem; }
+  .song-detail .s-body .flex-fill{ max-width:100%; margin-right:0; }
+  .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.6rem; right:auto; bottom:auto; }
+  .song-detail .s-body p{ font-size:.95rem; line-height:1.85; }
   .container.container-narrow{ padding-left:16px; padding-right:16px; }
   .card{ margin-left:auto; margin-right:auto; width:100%; }
-} }
+}
+
+ }
 
     .section{ padding: 36px 0; position:relative; }
-    .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); }
+    .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); box-sizing:border-box; width:100%; }
     .btn-yellow{ background-color:#ffd700; color:#000; border:none; }
     .btn-yellow.cta{ color:#000 !important; font-weight:700; text-shadow:none; font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
     .btn-yellow.cta:hover{ color:#fff !important; text-shadow: 1px 1px 0 rgba(110,70,0,.55), 4px 4px 9px rgba(110,70,0,.55); }
@@ -73,7 +77,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
     .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; font-size:var(--fs-hint); }
     .song-detail[open] .chev{transform:rotate(-180deg);}    
     .song-detail[open] .hint{opacity:0;} .song-detail[open]{background:rgba(0,0,0,.03);} .song-detail[open] summary{background:transparent;border-radius:8px 8px 0 0;}
-    .song-detail .s-body{padding:.8rem 1rem 2.5rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;}       
+    .song-detail .s-body{padding:.9rem 1rem 2.6rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;}       
     .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}  
     .song-detail .s-body p{font-size:var(--fs-body); line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
     .song-detail .s-body .flex-fill{max-width:60ch;}
