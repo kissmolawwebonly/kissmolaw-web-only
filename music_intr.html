@@ -120,12 +120,30 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
 /* removed tapes */
 
 
-/* === Frame stripes around the page (SVG background) === */
-.frame-stripes{ position:absolute; left:0; right:0; top:0; bottom:-28px; /* extend into footer gap (footer has margin-top:28px) */
-  z-index:0; pointer-events:none; opacity:.5; background-repeat:no-repeat; background-size:100% 100%;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="none"><defs><pattern id="diag" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(30 28 28)"><rect width="56" height="56" fill="%23ffd24d"/><rect width="56" height="28" fill="%23000"/></pattern></defs><rect x="0" y="0" width="1200" height="800" fill="none"/><g fill="url(%23diag)"><rect x="0" y="0" width="120" height="800"/><rect x="1080" y="0" width="120" height="800"/></g><rect x="120" y="0" width="960" height="800" fill="none"/></svg>');
-}
+/* frame stripes removed */
+
 /* If you want thicker/thinner frame, tweak the left/right <rect width> (now 120) */
+/* --- Responsive hardening (mobile-safe) --- */
+/* Keep card content from being covered by the YouTube badge */
+.song-detail .s-body{ padding-right:8.5rem; }
+@media (max-width:576px){ .song-detail .s-body{ padding-right:7rem; } }
+/* Make long titles wrap nicely on small screens */
+.song-detail .title{ word-break:break-word; hyphens:auto; }
+/* Button sizing & readability on mobile */
+.btn-compact{ min-height:40px; }
+@media (max-width:576px){
+  .btn-compact{ font-size:1rem; padding:.5rem .9rem; }
+  header .brand .brand-title{ font-size:1.25rem; }
+  .song-detail summary{ padding:.55rem .7rem; }
+  .song-detail .s-body{ padding:.7rem .9rem 2.2rem; }
+  .song-detail .s-body p{ font-size:.95rem; line-height:1.8; }
+  .yt-badge-abs{ right:.75rem; bottom:.75rem; }
+}
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce){
+  .song-detail .s-body{ transition:none; }
+  .song-detail .chev{ transition:none; }
+}
 </style>
 </head>
 <body>
@@ -142,8 +160,6 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
     </div>
   </header>
   <main class="section">
-    <!-- border stripes (SVG) rotated feel) -->
-    <div class="frame-stripes" aria-hidden="true"></div>
     <div class="container container-narrow">
       <div class="card p-3 p-md-4 mb-3" id="intro-prisoner">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
@@ -180,7 +196,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
                   <p class="mt-2 mb-0">
                     全体的にかなり現代チックなジャズですが、歌詞中にある、<br>
                     『なんだったんって恋をしよう』<br>
-                    『惚れたらきっと負けな気がして 分かってたって君に勝てない』」<br>
+                    『惚れたらきっと負けな気がして 分かってたって君に勝てない』<br>
                     などが、個人的に🚬🐯みを感じるなと。<br>
                     🐯に言ってほしい歌詞もあるし、🚬🐯がお互いに思っていてほしい歌詞もある。<br>
                     海兵と海賊である2人は、お互いに過ちを犯すことを遊び程度と思わせているが、本心ではそう思っていない。🐯を欲しがって🚬を欲しがって、迷いもなく過ちを犯す。ただの未来だから。緩急のあるジャズも🚬🐯に似合うなぁと思っていたり…。<br>
