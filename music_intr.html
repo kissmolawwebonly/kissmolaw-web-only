@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>曲紹介｜キスもろくにできねェの？</title>
+  <!-- Favicon (circle variants preferred if available in same dir) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="kissmolaw_logo_circle_32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="kissmolaw_logo_circle_48.png">
+  <link rel="apple-touch-icon" href="kissmolaw_logo_circle_180.png">
+  <link rel="icon" type="image/x-icon" href="kissmolaw_logo_circle.ico">
+  <!-- OGP (optional: adjust URL paths when deploy) -->
+  <meta property="og:title" content="曲紹介｜キスもろくにできねェの？" />
+  <meta property="og:description" content="イメソンプレイリストの曲をまとめて紹介" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="kissmolawmain.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fonts: keep same as index.html -->
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; }
+    /* Match index.html background gradient: 左=白 → 右=グレー */
+    body{ background: linear-gradient(to right, #ffffff 0%, #ffffff 28%, var(--bg-plate-hi) 52%, var(--bg-plate-lo) 100%); color:#111; }
+    body{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+    h1,h2,h3,h4,h5,h6,.btn{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+    html{ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; scrollbar-gutter: stable; }
+
+    .container-narrow{ max-width: 803px; }
+    header.site{ background:#000; color:#fff; padding:18px 0; position:relative; z-index:2; }
+    header .brand{ display:flex; align-items:center; gap:.6rem; }
+    header .brand img{ width:28px; height:28px; border-radius:50%; }
+header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:.01em; color:#fff; }
+@media (max-width:576px){ header .brand .brand-title{ font-size:1.35rem; } }
+
+    .section{ padding: 36px 0; position:relative; }
+    .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); }
+    .btn-yellow{ background-color:#ffd700; color:#000; border:none; }
+    .btn-yellow.cta{ color:#000 !important; font-weight:700; text-shadow:none; font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+    .btn-yellow.cta:hover{ color:#fff !important; text-shadow: 1px 1px 0 rgba(110,70,0,.55), 4px 4px 9px rgba(110,70,0,.55); }
+    .btn-compact{ display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:.42em 1.05em; border-radius:.45rem; font-size:1.1rem; }
+
+    /* Playlist hero */
+    .yt-hero{ display:grid; grid-template-columns: 1.25fr .75fr; gap:16px; }
+    .yt-card{ position:relative; display:block; width:100%; aspect-ratio:16/9; border-radius:16px; overflow:hidden; background:linear-gradient(180deg, #ff4d4d, #c10000); box-shadow:0 8px 22px rgba(0,0,0,.18); margin:0 auto; }
+    .yt-icon{ position:absolute; inset:0; margin:auto; width:62%; height:62%; filter:drop-shadow(0 3px 6px rgba(0,0,0,.25)); }
+    .yt-label{ position:absolute; left:10px; bottom:8px; font-weight:700; font-size:.9rem; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); letter-spacing:.02em; }
+    @media (max-width: 768px){ .yt-hero{ grid-template-columns:1fr; } }
+
+    /* Modal */
+    .modal-yt{ width:100%; aspect-ratio:16/9; border:0; border-radius:12px; background:#000; }
+    .modal-song-title{ font-weight:800; }
+    .modal-song-desc{ white-space:pre-wrap; line-height:1.6; }
+
+    .song-detail{padding:.25rem 0; overflow:hidden; border-radius:8px; background:transparent;}  
+    .song-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;border-radius:8px;background:rgba(0,0,0,.03);transition:background .25s ease;}      
+    .song-detail summary::-webkit-details-marker{display:none;}
+    .song-detail .chev{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #000;transform-origin:50% 40%;transition:transform .48s cubic-bezier(.25,.8,.25,1), border-top-color .48s ease-out;} 
+    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; font-size:.85rem; color:#666; line-height:1; }
+    .song-detail[open] .chev{transform:rotate(-180deg);}    
+    .song-detail[open] .hint{opacity:0;} .song-detail[open]{background:rgba(0,0,0,.03);} .song-detail[open] summary{background:transparent;border-radius:8px 8px 0 0;}
+    .song-detail .s-body{padding:.8rem 1rem 2.5rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;}       
+    .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}  
+    .song-detail .s-body p{font-size:1rem; line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
+    .song-detail .s-body .flex-fill{max-width:60ch;}
+    .song-detail .s-body .d-flex{gap:1rem;}
+    @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} }  
+    .song-detail summary:focus-visible{outline:2px solid var(--brand-yellow); outline-offset:2px;}
+    .yt-oembed{display:inline-flex;align-items:center;text-decoration:none;}
+    /* Base style for YouTube badge */
+    .yt-badge{display:inline-flex;align-items:center;gap:.5rem;background:#000;color:#fff;border-radius:9999px;padding:.45rem .7rem;font-weight:700;line-height:1;text-decoration:none;font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;}
+    .yt-badge span{color:#fff}
+    /* Yellow variant to match bottom home button */
+    .yt-badge.yt-yellow{ background:var(--brand-yellow); color:#fff; text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45); }
+    .yt-oembed:hover .yt-badge.yt-yellow{ filter:brightness(.98); }
+    .yt-badge-abs{position:absolute;right:1rem;bottom:1rem;text-decoration:none;}
+    .yt-badge svg{width:18px;height:18px;display:block;}
+    .yt-badge svg{width:18px;height:18px;display:block;}
+    /* ワンポイントラベル */
+    .smoro-tip{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;color:#fff;background:var(--brand-yellow);padding:.2rem .6rem;border-radius:9999px;letter-spacing:.02em;box-shadow:0 1px 3px rgba(0,0,0,.08);text-shadow:0 1px 0 rgba(80,40,0,.45),0 2px 4px rgba(80,40,0,.35);margin-left:1em;}
+    @media (max-width:576px){ .yt-oembed{width:auto;} }
+    /* 曲タイトルは Zen Maru Gothic を優先 */
+    .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-weight:700; letter-spacing:.01em; }
+    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; }
+
+    footer{ background:#000; color:#fff; padding:28px 0; margin-top:28px; position:relative; z-index:2; }
+    footer .footer-note{ margin:.25rem 0; text-align:center; }
+  /* Avoid layout shift when vertical scrollbar appears (keeps width stable) */
+    html{ scrollbar-gutter: stable; }
+    @supports not (scrollbar-gutter: stable){ body{ overflow-y: scroll; } }
+  .rec-inline{display:block;text-align:right;letter-spacing:.01em;font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-size:.85rem;font-weight:700;}
+  .btn-bottom-home{ position:relative; z-index:2; }
+/* playlist button: black base, white text, no shadow */
+/* playlist button: black base, white text, visible border */
+.btn-playlist{
+  background:var(--brand-yellow);
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45);
+  transition:background-color .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.btn-playlist:hover{
+  background:#e0c200;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.28);
+  box-shadow:0 3px 10px rgba(0,0,0,.3);
+  text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45);
+}
+/* 常時白文字＆茶色い影を強制 */
+.btn-yellow.cta.btn-bottom-home{ color:#fff !important; text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45) !important; }
+/* hover時も影を消さず背景のみやや暗く */
+.btn-bottom-home:hover{ background:#e0c200; color:#fff !important; filter:brightness(.98); text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45); }
+  /* Ensure layering: tapes (1) < cards/header/footer (2) */ .card{ position:relative; z-index:2; }
+    .container.container-narrow > .mb-3{ position:relative; z-index:2; }
+/* header playlist button position */
+.header-cta{ position:static; margin-left:auto; margin-right:12px; }
+/* alternate card background: white / pale yellow */
+.container.container-narrow > .card{ background:#fff; }
+/* removed tapes */
+
+
+/* === Frame stripes around the page (SVG background) === */
+.frame-stripes{ position:absolute; left:0; right:0; top:0; bottom:-28px; /* extend into footer gap (footer has margin-top:28px) */
+  z-index:0; pointer-events:none; opacity:.5; background-repeat:no-repeat; background-size:100% 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="none"><defs><pattern id="diag" patternUnits="userSpaceOnUse" width="56" height="56" patternTransform="rotate(30 28 28)"><rect width="56" height="56" fill="%23ffd24d"/><rect width="56" height="28" fill="%23000"/></pattern></defs><rect x="0" y="0" width="1200" height="800" fill="none"/><g fill="url(%23diag)"><rect x="0" y="0" width="120" height="800"/><rect x="1080" y="0" width="120" height="800"/></g><rect x="120" y="0" width="960" height="800" fill="none"/></svg>');
+}
+/* If you want thicker/thinner frame, tweak the left/right <rect width> (now 120) */
+</style>
+</head>
+<body>
+  <header class="site">
+    <div class="container container-narrow d-flex justify-content-between align-items-center">
+      <div class="brand"><strong class="brand-title">イメソンリスト</strong></div>
+      <a class="btn btn-yellow btn-compact cta btn-bottom-home d-inline-flex align-items-center gap-2 header-cta" href="https://youtube.com/playlist?list=PLYYqulEPPCR44hqXyvQwrGzKZiNwofDRS&si=JrCVMddFM3Xkq4JA" target="_blank" rel="noopener">
+        <svg viewBox="0 0 120 84" aria-hidden="true" width="18" height="18" style="flex:0 0 18px;">
+          <rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/>
+          <polygon points="48,25 48,59 79,42" fill="#ffffff"/>
+        </svg>
+        <span>プレイリストを聴く</span>
+      </a>
+    </div>
+  </header>
+  <main class="section">
+    <!-- border stripes (SVG) rotated feel) -->
+    <div class="frame-stripes" aria-hidden="true"></div>
+    <div class="container container-narrow">
+      <div class="card p-3 p-md-4 mb-3" id="intro-prisoner">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">Prisoner Of Love / 宇多田ヒカル</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">秘密をさらけ出せないせつない歌詞とメロディがとてもスモロです</p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/6bDyqwwH4Xs?si=5syNttyjmoLWLrri" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-monshiro">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">紋白蝶 feat.石原慎也 (Saucy Dog)<br> / TOKYO SKA PARADISE ORCHESTRA</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">
+                    全体的にかなり現代チックなジャズですが、歌詞中にある、<br>
+                    『なんだったんって恋をしよう』<br>
+                    『惚れたらきっと負けな気がして 分かってたって君に勝てない』」<br>
+                    などが、個人的に🚬🐯みを感じるなと。<br>
+                    🐯に言ってほしい歌詞もあるし、🚬🐯がお互いに思っていてほしい歌詞もある。<br>
+                    海兵と海賊である2人は、お互いに過ちを犯すことを遊び程度と思わせているが、本心ではそう思っていない。🐯を欲しがって🚬を欲しがって、迷いもなく過ちを犯す。ただの未来だから。緩急のあるジャズも🚬🐯に似合うなぁと思っていたり…。<br>
+                    モンシロチョウは黒と白の蝶々ですし、心做しか🐯の帽子に似ていたり…。<br>
+                    そんな『紋白蝶』が私にとっての🚬🐯イメソンです。
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/O5VhnfkSjgA?si=bGopRyXByXWczwx4" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-aimyon">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">貴方解剖純愛歌 〜死ね〜 / あいみょん</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">心臓抜く歌詞が出てくるとついついスモロに置き換えてしまいます</p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/ObCzNAw7dgc?si=87RDyFDhSlRa8PG9" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-milet">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">us / milet</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">海軍と海賊と言うストレートに気持ちを伝えあえない間柄の二人。<br>
+                    曲の最後『この線を越えてしまえば戻れないんだよ』が「境界線」がキーワードな二人にすごくぴったりだと思ってます！
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/sPdUqkz1kVw?si=ZYevw0uYiz9hYPbk" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>      <div class="card p-3 p-md-4 mb-3" id="song-ainokedamono">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">愛のけだもの / 神はサイコロを振らない×キタニタツヤ</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">あなたがダメにした私を最後まで愛さなくても構わない、求め合って奪い合って爛れたこれも確かに愛だった←🚬🐯！歌詞の隅から隅まで🚬🐯が香ります本当なんです。<br><span class="rec-inline">推薦：朝透さん@asatoS4852</span></p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/fQybVLWmj9M?si=joWlSTcSZtBVZCVf" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-natsunihon">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">日本の夏 feat.七滝今 & 梓川 / 平田義久</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">🚬🐯と言えば境界線と吹雪、でもアルコールの湿度に満ちた蒸せ返るような色の熱帯夜も似合うと思います…！<br><span class="rec-inline">推薦：朝透さん@asatoS4852</span></p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/8i2x_f6sj_k?si=cBAkAjsSGpVEhLnm" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-waltz">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">私とワルツを / 鬼束ちひろ</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">
+                    破滅的ながらも切ない愛をうたった曲調に原作スモロを感じます。
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/LXft3v_cKHk?si=n77iMsH2bL0TaB1H" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-clarity">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">Clarity feat. Foxes / Zedd</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">冷たい海を連想する歌詞と、サビを和訳したときの『おれたちの愛が悲劇なら、どうしておれはお前に救われているんだろう』という部分に立場を越えてどうしようもなく惹かれ合ってしまったスモロみを感じる曲です。<br>
+                    本当は離れた方がいいとわかっているのにそうできない、なぜならお前はすでにおれの一部だから…みたいなことも歌っています。スモロ、幸せに、なれーーー！！！！！<br>
+                    <span class="rec-inline">推薦：とよく＠to_yoku_</span>
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/IxxstCcJlsc?si=uM06GWU67XCNULoT" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-tattoo">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">TATTOO / Official髭男dism</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">この曲はスモロの全体的な雰囲気に合わせて選びました。伴奏だけでなく歌詞もとてもよく似合います。特に『そっけないくらいで僕らはちょうどいいんじゃない？』という部分はスモロを要約したフレーズのようで最高です。歌詞を一つ一つじっくり味わいながら聴くと、さらに良さが伝わりますよ！<br>
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/oLrp9uTa9gw?si=nKWMKfjTbG1SL-IK" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>      <div class="card p-3 p-md-4 mb-3" id="song-pretender">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">Pretender / Official髭男dism</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">スモがロを好きになった立場を歌っているように感じてこの曲を選びましたが、実は私がスモロを好きな理由を歌詞にしたような歌でもあるので選びました。特に『君の運命のヒトは僕じゃない』から『でも離れ難いのさ』という部分は、お互いが互いにとって第一順位ではないのに惹かれ合ってしまうという歌詞で、とても切なくて素敵だと思います。</p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/TQ8WlA2GXbk?si=XJMMnOJ2Mn7lG2Qb" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>      <div class="card p-3 p-md-4 mb-3" id="song-aiwotsutaetai">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">愛を伝えたいだとか / あいみょん</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">この曲は倦怠期の同棲中の恋人について歌われていますが、まるでスモの執務室のソファに勝手に居座ったロのボロボロな心情を映しているように感じて選びました。もちろん、二人がまだ付き合っていない時点でのことです。最後の『今日は日が落ちる頃に会えるの？』というフレーズが、めちゃくちゃな考えの末にロがやっと口にしたセリフだったらいいですね。</p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/9qRCARM_LfE?si=1vt1LT1VZjp_23RU" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-aijanai">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">愛じゃない / DAZBEE</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">こちらはロがスモに恋に落ちた時の心情を込めた歌です。スモはそれでもPretenderのように愛することを認めそうですが、ロは歌のタイトルのように「誰か嘘だと言ってくれ」と必死に否定しているように思えます。（PH 以前の時点）<br>
+                    特に『どうかしてるどうかしてる』から『丙丁脳内 契約じゃ恨んで然り、って』という歌詞は、本当にロの真髄を表していると思います。
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/gqUStT2oax0?si=IcIHN_LZJRrK_A5o" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-two">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">2 feat. Lee Youngji / 星野源</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">愛という単語がたくさん出てくる曲で、特に『渡る海路に 壁のないラヴ』や『禁忌禁則の』という歌詞を聴いて、これ絶対スモロだろ！と思いました。さらに、この曲の『이따금 손에 써놨던』から『나와 나의 싸움도』という歌詞も印象的で、スモロにぴったりです。<br>
+                    色々と爽やかな曲というか、ついに認めて結ばれたスモロの歌みたいで好きです。
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/QplijwggNxs?si=92RP_DHKGfE3KoEE" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-shirushi">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">しるし / Mr.Children</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">『共に生きれない日が来たって どうせ愛してしまうと思うんだ』という歌詞に凝縮されたスモロみ<br><span class="rec-inline">推薦：おこめさん@rice_smolaw</span></p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/xXA5StMti8c?si=rDOjH5bP8Se9ylda" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-seigi">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">正義 / ずっと真夜中でいいのに。</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">解釈の余地が広い曲です。言葉遊びが多い中に、互いの関係に名前がつかない・つけようのない二人の雰囲気を感じます。さらには、近づいて遠のいてと、距離を測り合い続ける感じが、海賊と海兵という立場にある二人を表しているようです。<br>
+                    ２番にある『悪いことしてなくても秘密を隠し通すことが正義なら』は、特にPH編の対ヴェルゴ戦を彷彿とさせる一節です。
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/7kUbX4DoZoc?si=ZiJNV8nutwJzHY_i" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-lovetrigger">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">LOVE TRIGGER / Snow Man</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">こちらの曲からは、現パロな二人を想像します。互いの魅力に惹かれていく様を描いた歌詞と、大人な雰囲気を感じる曲調がすてきです。I Don't Like Mondays.さんver.も最近出ていますので、アニメ主題歌つながりでそちらもおすすめです。</p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/eybKo4WgvgU?si=DTXmshlPr4jEQf4R" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 p-md-4 mb-3" id="song-yuwaku">
+        <div class="d-flex flex-column flex-md-row align-items-start gap-3">
+          <div class="flex-fill">
+            <details class="song-detail">
+              <summary class="h5 fw-bold mb-1 m-0 d-flex align-items-center gap-2">
+                <span class="chev" aria-hidden="true"></span>
+                <span class="title">誘惑 / GLAY</span>
+                <span class="hint ms-auto">詳細</span>
+              </summary>
+              <div class="s-body">
+                <div class="flex-fill">
+                  <div class="smoro-tip" aria-label="ワンポイント">スモロポイント</div>
+                  <p class="mt-2 mb-0">死地に臨むにあたって二度と会えなくなるかもしれない海兵をダメ元で今夜限りだからと艷っぽく誘うローくんと、駄目だと思ってるのにどうにも気になって仕方がない海賊が何かを隠した瞳で誘ってくるのに乗って刻みつけるみたいに思い切り抱く漢スモーカーの歌です<br>
+                    海兵も海賊も立場も道理も何もかも見ないふりして互いの体に溺れていたい、そんなインモラルな一夜の雰囲気がまさに未成立スモロのスケベという感じがしています<br>
+                    スモロというカプにおける髪が額に張り付くような湿度とエロス、それを体現した歌だと思います<br>
+                    <span class="rec-inline">推薦：パタヤビーチさん@attaka_ofutun</span>
+                  </p>
+                </div>
+                <a class="yt-badge-abs" data-yt-auto href="https://youtu.be/fGlDHwlq5SQ?si=UkzVwGPqECc3gvy1" target="_blank" rel="noopener">YouTubeリンク</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 mb-2 text-end">
+        <a class="btn btn-yellow btn-compact cta btn-bottom-home" href="https://www.kissmolaw.com/" target="_blank" rel="noopener">トップページへ戻る</a>
+      </div>
+    </div>
+  </main>
+  <!-- フッター -->
+  <footer>
+    <div class="container container-narrow">
+      <p class="footer-note">本サイトは非公式ファンサイトです</p>
+      <p class="footer-note">お問い合わせは主催 <a href="https://x.com/kissmolaw" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Xアカウント</a>
+      <br>または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p>
+    </div>
+  </footer>
+
+  <!-- Modal for in-page play -->
+  <div class="modal fade" id="songModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title modal-song-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <iframe class="modal-yt" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="mt-3 modal-song-meta text-muted small"></div>
+          <p class="mt-2 modal-song-desc"></p>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-yellow btn-compact cta" target="_blank" rel="noopener">YouTubeで開く</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+(()=>{  // cleaned: removed global tapes generator
+  document.querySelectorAll('a[data-yt-auto]').forEach(a => {
+    const label = a.getAttribute('data-yt-label') || 'YouTubeで再生';
+    a.setAttribute('aria-label', label);
+    a.innerHTML = `
+      <span class="yt-badge">
+        <svg viewBox="0 0 120 84" aria-hidden="true">
+          <rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/>
+          <polygon points="48,25 48,59 79,42" fill="#ffffff"/>
+        </svg>
+        <span>${label}</span>
+      </span>
+    `;
+  });
+})();
+</script>
+</body>
+</html>
