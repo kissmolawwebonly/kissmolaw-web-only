@@ -41,6 +41,44 @@
     @media (max-width:576px){
       .btn-compact{ font-size:var(--fs-btn); padding:.55rem 1rem; min-height:44px; }
       header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
+
+      /* --- summary(灰グレー帯)をカード幅いっぱいに固定・タイトルは折り返し可 --- */
+      .song-detail summary{ width:100%; display:flex; flex-wrap:nowrap; align-items:flex-start; gap:.5rem; padding:.6rem .8rem; /* 高さは内容に追従 */ }
+      .song-detail .chev{ margin-top:.2rem; flex:0 0 auto; }
+      .song-detail .title{ font-size:clamp(.98rem, 4.4vw, 1.12rem); line-height:1.35; white-space:normal; word-break:break-word; overflow-wrap:anywhere; display:block; }
+      .song-detail .title br{ display:inline; }
+      /* 「詳細」は常に横書き・右端固定で改行させない */
+      .song-detail .hint{ writing-mode:horizontal-tb; text-orientation:mixed; white-space:nowrap; font-size:clamp(.78rem, 3.2vw, .9rem); margin-left:auto; flex:0 0 auto; align-self:center; }
+
+      /* 本文は縦積み、ボタンは本文の下に流し込み（重なり防止） */
+      .song-detail .s-body{ display:flex; flex-direction:column; gap:.8rem; padding:.8rem .9rem 1rem; padding-right:1rem; }
+      .song-detail .s-body .flex-fill{ max-width:100%; }
+      .song-detail .s-body p{ font-size:.95rem; line-height:1.85; margin:0; }
+      .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.25rem; right:auto; bottom:auto; z-index:1; }
+
+      .container.container-narrow{ padding-left:16px; padding-right:16px; }
+      .card{ margin-left:auto; margin-right:auto; width:100%; }
+    }
+      header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
+
+      /* --- summary(灰グレー帯)の高さを安定化 --- */
+      .song-detail summary{ padding:.55rem .7rem; min-height:48px; align-items:center; }
+      /* タイトルは1行で省略（モバイル時のみ）。<br>は無効化 */
+      .song-detail .title{ font-size:clamp(.96rem, 4.2vw, 1.05rem); display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+      .song-detail .title br{ display:none; }
+      /* 「詳細」を常に横書き＆一行固定 */
+      .song-detail .hint{ writing-mode:horizontal-tb; text-orientation:mixed; white-space:nowrap; font-size:clamp(.78rem, 3.2vw, .88rem); }
+
+      /* 本文側は縦積み + 余白を安定化。バッジは本文の下へ回す */
+      .song-detail .s-body{ display:flex; flex-direction:column; gap:.75rem; padding:.7rem .9rem 1rem; padding-right:1rem; }
+      .song-detail .s-body .flex-fill{ max-width:100%; margin-right:0; }
+      .song-detail .s-body p{ font-size:.95rem; line-height:1.85; margin:0; }
+      .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.25rem; right:auto; bottom:auto; z-index:1; }
+
+      .container.container-narrow{ padding-left:16px; padding-right:16px; }
+      .card{ margin-left:auto; margin-right:auto; width:100%; }
+    }
+      header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
       .song-detail summary{ padding:.55rem .7rem; }
       /* 文字との重なり防止：モバイル時はバッジを本文下・右寄せに流し込む */
       .song-detail .s-body{ display:flex; flex-direction:column; padding:.7rem .9rem 1rem; }
