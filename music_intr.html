@@ -2,7 +2,7 @@
   header .brand .brand-title{font-size:clamp(1.1rem,4.1vw,1.2rem)}
   .btn-compact{font-size:var(--fs-btn);padding:.55rem 1rem;min-height:44px}
   /* タイトル帯：常に横いっぱい。背景は疑似要素でフル幅固定 */
-  .song-detail summary{width:100%;display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:.5rem;padding:.6rem .8rem;background:transparent;position:relative}
+  .song-detail summary{width:100%;display:grid!important;grid-template-columns:18px 1fr auto;align-items:center;gap:.5rem;padding:.6rem .8rem;background:transparent;position:relative}
   .song-detail summary::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.03);border-radius:8px}
   .song-detail summary>*{position:relative;z-index:1}
   .song-detail .chev{margin-top:.2rem;flex:0 0 auto}
