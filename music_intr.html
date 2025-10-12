@@ -103,11 +103,6 @@
     .yt-label{ position:absolute; left:10px; bottom:8px; font-weight:700; font-size:.9rem; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); letter-spacing:.02em; }
     @media (max-width: 768px){ .yt-hero{ grid-template-columns:1fr; } }
 
-    /* Modal */
-    .modal-yt{ width:100%; aspect-ratio:16/9; border:0; border-radius:12px; background:#000; }
-    .modal-song-title{ font-weight:800; }
-    .modal-song-desc{ white-space:pre-wrap; line-height:1.6; }
-
     .song-detail{padding:.25rem 0; overflow:hidden; border-radius:8px; background:transparent;}
     .song-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;border-radius:8px;background:rgba(0,0,0,.03);transition:background .25s ease;}
     .song-detail summary::-webkit-details-marker{display:none;}
@@ -115,12 +110,12 @@
     .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; letter-spacing:.01em; font-size:var(--fs-title); }
     .song-detail[open] .chev{transform:rotate(-180deg);}    
     .song-detail[open] .hint{opacity:0;} .song-detail[open]{background:rgba(0,0,0,.03);} .song-detail[open] summary{background:transparent;border-radius:8px 8px 0 0;}
-    .song-detail .s-body{padding:.9rem 1rem 2.6rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative; padding-right:clamp(6.5rem,10vw,8.5rem);} 
+    .song-detail .s-body{padding:.6rem 1.6rem .85rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;} 
     .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}
-    .song-detail .s-body p{font-size:var(--fs-body); line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
-    .song-detail .s-body .flex-fill{max-width:60ch;}
+    .song-detail .s-body p{ font-size:var(--fs-body); line-height:1.85; letter-spacing:.01em; margin:0; text-indent:0; padding-left: calc(1em + .6rem); font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+    .song-detail .s-body .flex-fill{max-width:100%;}
     .song-detail .s-body .d-flex{gap:1rem;}
-    @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} .song-detail .s-body{ padding-right:1rem; } }
+    @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} .song-detail .s-body{ padding: .6rem 1.35rem .85rem; } }
     .song-detail summary:focus-visible{outline:2px solid var(--brand-yellow); outline-offset:2px;}
     .yt-oembed{display:inline-flex;align-items:center;text-decoration:none;}
 
@@ -141,7 +136,7 @@
     /* Avoid layout shift when vertical scrollbar appears (keeps width stable) */
     @supports not (scrollbar-gutter: stable){ body{ overflow-y: scroll; } }
 
-    .rec-inline{display:block;text-align:right;letter-spacing:.01em;font-size:.85rem;font-weight:700;}
+    .rec-inline{display:block;text-align:right;letter-spacing:.01em;font-size:.85rem;font-weight:700;margin:.2rem 0 0 0;line-height:1.4;padding:0;}
     .btn-bottom-home{ position:relative; z-index:2; }
 
     /* playlist button */
@@ -188,8 +183,18 @@
     @supports(padding: max(0px)){
       body{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
     }
+    
     /* ===== 追加分ここまで ===== */
-  </style>
+/* 最終要素の余白をゼロにして“1行空き”を解消 */
+.song-detail .s-body .flex-fill > *:last-child{ margin-bottom:0 !important; }
+.song-detail .s-body p:last-child{ margin-bottom:0 !important; }
+  /* ===== インラインYouTube埋め込み（PC/モバイル共通） ===== */
+.yt-inline-wrap{ display:flex; justify-content:center; width:100%; margin:.1rem auto 1rem !important; position:relative; border-radius:12px; overflow:hidden; background:#000; box-shadow:0 6px 16px rgba(0,0,0,.16); }
+.yt-inline{ width:100%; max-width:576px; aspect-ratio:16/9; background:transparent; border:0; border-radius:0; box-shadow:none; display:block; margin:0 auto; }
+@media (max-width:576px){ .yt-inline{ max-width:576px; } }
+/* 強制上書き（最後尾）: 説明文の開始位置＆フォントを固定 */
+.song-detail .s-body p{ padding-left: calc(1em + .6rem) !important; font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif !important; }
+</style>
 </head>
 <body>
   <header class="site">
@@ -609,31 +614,11 @@
     </div>
   </footer>
 
-  <!-- Modal for in-page play -->
-  <div class="modal fade" id="songModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title modal-song-title"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <iframe class="modal-yt" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <div class="mt-3 modal-song-meta text-muted small"></div>
-          <p class="mt-2 modal-song-desc"></p>
-        </div>
-        <div class="modal-footer">
-          <a class="btn btn-yellow btn-compact cta" target="_blank" rel="noopener">YouTubeで開く</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
   (function(){
-    // バッジ整形 + モーダル再生
+    // バッジ整形のみ：クリックで通常どおりYouTubeへ遷移
     document.querySelectorAll('a[data-yt-auto]').forEach(a => {
       const label = a.getAttribute('data-yt-label') || 'YouTubeで再生';
       a.setAttribute('aria-label', label);
@@ -646,78 +631,99 @@
           <span>${label}</span>
         </span>
       `;
-
-      a.addEventListener('click', function(ev){
-        // 新規タブ意図は尊重
-        if (ev.ctrlKey || ev.metaKey || ev.button === 1) return;
-        ev.preventDefault();
-
-        const href = a.getAttribute('href') || '';
-        const parsed = parseYouTubeURL(href);
-        if (!parsed){ window.open(href, '_blank', 'noopener'); return; }
-        const { id, params } = parsed;
-
-        const card  = a.closest('.card');
-        const title = card?.querySelector('.song-detail .title')?.innerText?.trim() || '';
-        const desc  = card?.querySelector('.song-detail .s-body p')?.innerText?.trim() || '';
-        const embed = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0${params ? '&'+params : ''}`;
-
-        const modalEl = document.getElementById('songModal');
-        const iframe  = modalEl.querySelector('.modal-yt');
-        const mtitle  = modalEl.querySelector('.modal-song-title');
-        const mdesc   = modalEl.querySelector('.modal-song-desc');
-        const mmeta   = modalEl.querySelector('.modal-song-meta');
-        const mlink   = modalEl.querySelector('.modal-footer a');
-
-        iframe.src        = embed;
-        mtitle.textContent= title || 'YouTube';
-        mdesc.textContent = desc || '';
-        mmeta.textContent = href;
-        mlink.href        = href;
-
-        const bsModal = new bootstrap.Modal(modalEl, { keyboard:true });
-        bsModal.show();
-
-        const onHidden = () => { iframe.src = ''; modalEl.removeEventListener('hidden.bs.modal', onHidden); };
-        modalEl.addEventListener('hidden.bs.modal', onHidden);
-      });
+      // イベントハンドラは付けず、a要素のデフォルト遷移を利用
     });
-
-    function parseYouTubeURL(url){
-      try{
-        const u = new URL(url);
-        let id = '';
-        let params = '';
-        if (u.hostname.includes('youtu.be')){
-          id = u.pathname.slice(1);
-          params = u.searchParams.toString().replace(/^(\?|&)/,'');
-        } else if (u.hostname.includes('youtube.com')){
-          if (u.pathname.startsWith('/watch')){
-            id = u.searchParams.get('v');
-            const t = u.searchParams.get('t');
-            params = t ? `start=${parseTimeToSeconds(t)}` : '';
-          } else if (u.pathname.startsWith('/shorts/')){
-            id = u.pathname.split('/')[2];
-          }
-        }
-        if (!id) return null;
-        return { id, params };
-      }catch(e){ return null; }
-    }
-
-    function parseTimeToSeconds(t){
-      if (!t) return 0;
-      if (/^\d+$/.test(t)) return parseInt(t,10);
-      if (/^\d+:\d{1,2}$/.test(t)){
-        const [m,s] = t.split(':').map(n=>parseInt(n,10));
-        return m*60 + s;
-      }
-      const m = /(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/.exec(t);
-      if (!m) return 0;
-      const h = parseInt(m[1]||0,10), mm=parseInt(m[2]||0,10), ss=parseInt(m[3]||0,10);
-      return h*3600 + mm*60 + ss;
-    }
   })();
-  </script>
+</script>
+<script>
+// 各カードの説明文の下に、リンク先のYouTubeプレイヤーを中央配置で埋め込む（自動再生なし）
+(function(){
+  function isDigitsOnly(s){
+    if (!s) return false; for (var i=0;i<s.length;i++){ var c=s[i]; if (c<'0'||c>'9') return false; } return true;
+  }
+  function parseTimeToSeconds(t){
+    if (!t) return 0;
+    if (isDigitsOnly(t)) return parseInt(t,10);
+    if (t.indexOf(':')!==-1){
+      var parts=t.split(':');
+      if (parts.length===2){
+        var m=parseInt(parts[0]||'0',10), s=parseInt(parts[1]||'0',10);
+        return m*60+s;
+      } else if (parts.length===3){
+        var h=parseInt(parts[0]||'0',10), m2=parseInt(parts[1]||'0',10), s2=parseInt(parts[2]||'0',10);
+        return h*3600+m2*60+s2;
+      }
+    }
+    // handle 1h2m3s style
+    var total=0, num="";
+    for (var j=0;j<t.length;j++){
+      var ch=t[j];
+      if (ch>='0' && ch<='9'){ num+=ch; }
+      else if (ch==='h'){ total+= (parseInt(num||'0',10))*3600; num=""; }
+      else if (ch==='m'){ total+= (parseInt(num||'0',10))*60; num=""; }
+      else if (ch==='s'){ total+= parseInt(num||'0',10); num=""; }
+    }
+    if (num) total+= parseInt(num||'0',10);
+    return total;
+  }
+  function parseYouTubeURL(url){
+    try{
+      var u = new URL(url);
+      var id = '', params = '';
+      if (u.hostname.indexOf('youtu.be')!==-1){
+        id = u.pathname.replace('/', '');
+        params = u.searchParams.toString();
+      } else if (u.hostname.indexOf('youtube.com')!==-1){
+        if (u.pathname.indexOf('/watch')===0){
+          id = u.searchParams.get('v');
+          var t = u.searchParams.get('t');
+          var sec = parseTimeToSeconds(t);
+          if (sec>0){ params = 'start='+sec; }
+        } else if (u.pathname.indexOf('/shorts/')===0){
+          var parts = u.pathname.split('/');
+          id = (parts[2]||'').trim();
+        }
+      }
+      if (!id) return null;
+      return { id: id, params: params };
+    }catch(e){ return null; }
+  }
+
+  function injectInlinePlayers(){
+    var links = document.querySelectorAll('a[data-yt-auto]');
+    links.forEach(function(a){
+      var href = a.getAttribute('href') || '';
+      var parsed = parseYouTubeURL(href);
+      var sBody = a.closest('.s-body');
+      if (!parsed || !sBody){ a.remove(); return; }
+      var id = parsed.id, params = parsed.params;
+      var src = 'https://www.youtube.com/embed/'+id+'?rel=0'+(params?('&'+params):'');
+
+      var wrap = document.createElement('div');
+      wrap.className = 'yt-inline-wrap';
+      var iframe = document.createElement('iframe');
+      iframe.className = 'yt-inline';
+      iframe.src = src;
+      iframe.setAttribute('allow','accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen','');
+      iframe.setAttribute('title','YouTube video player');
+      wrap.appendChild(iframe);
+
+      // サムネイルを説明文より上に（タイトル直下）
+      var descBlock = sBody.querySelector('.flex-fill');
+      if (descBlock){ sBody.insertBefore(wrap, descBlock); }
+      else { sBody.prepend(wrap); }
+
+      a.remove();
+    });
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', injectInlinePlayers);
+  } else {
+    injectInlinePlayers();
+  }
+})();
+</script>
 </body>
 </html>
