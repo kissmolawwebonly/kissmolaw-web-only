@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
   <title>曲紹介｜キスもろくにできねェの？</title>
   <!-- Favicon (circle variants preferred if available in same dir) -->
   <link rel="icon" type="image/png" sizes="32x32" href="kissmolaw_logo_circle_32.png">
@@ -18,13 +19,14 @@
   <!-- Fonts: keep same as index.html -->
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{ --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4; 
-  /* Responsive type scales */
-  --fs-title: clamp(0.98rem, 3.4vw, 1.15rem);
-  --fs-body: clamp(.95rem, 3.6vw, 1.05rem);
-  --fs-hint: clamp(.82rem, 3.2vw, .9rem);
-  --fs-btn: clamp(.95rem, 3.4vw, 1.05rem);
-}
+    :root{
+      --brand-yellow:#ffd700; --tape-yellow:#d1b447; --tape-black:#222222; --bg-plate:#bfc5c9; --bg-plate-hi:#d5dadd; --bg-plate-lo:#a9b0b5; --surface:#f2f3f4;
+      /* Responsive type scales */
+      --fs-title: clamp(0.98rem, 3.4vw, 1.15rem);
+      --fs-body: clamp(.95rem, 3.6vw, 1.05rem);
+      --fs-hint: clamp(.82rem, 3.2vw, .9rem);
+      --fs-btn: clamp(.95rem, 3.4vw, 1.05rem);
+    }
     /* Match index.html background gradient: 左=白 → 右=グレー */
     body{ background: linear-gradient(to right, #ffffff 0%, #ffffff 28%, var(--bg-plate-hi) 52%, var(--bg-plate-lo) 100%); color:#111; }
     body{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
@@ -35,26 +37,24 @@
     header.site{ background:#000; color:#fff; padding:18px 0; position:relative; z-index:2; }
     header .brand{ display:flex; align-items:center; gap:.6rem; }
     header .brand img{ width:28px; height:28px; border-radius:50%; }
-header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:.01em; color:#fff; }
-@media (max-width:576px){
-  .btn-compact{ font-size:var(--fs-btn); padding:.55rem 1rem; min-height:44px; }
-  header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
-  .song-detail summary{ padding:.55rem .7rem; }
-  /* 文字との重なり防止：モバイル時はバッジを本文下・右寄せに流し込む */
-  .song-detail .s-body{ display:flex; flex-direction:column; padding:.7rem .9rem 1rem; }
-  .song-detail .s-body .flex-fill{ max-width:100%; margin-right:0; }
-  .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.6rem; right:auto; bottom:auto; }
-  .song-detail .s-body p{ font-size:.95rem; line-height:1.85; }
-  .container.container-narrow{ padding-left:16px; padding-right:16px; }
-  .card{ margin-left:auto; margin-right:auto; width:100%; }
-}
-
- }
+    header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:.01em; color:#fff; }
+    @media (max-width:576px){
+      .btn-compact{ font-size:var(--fs-btn); padding:.55rem 1rem; min-height:44px; }
+      header .brand .brand-title{ font-size:clamp(1.1rem, 4.1vw, 1.2rem); }
+      .song-detail summary{ padding:.55rem .7rem; }
+      /* 文字との重なり防止：モバイル時はバッジを本文下・右寄せに流し込む */
+      .song-detail .s-body{ display:flex; flex-direction:column; padding:.7rem .9rem 1rem; }
+      .song-detail .s-body .flex-fill{ max-width:100%; margin-right:0; }
+      .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.6rem; right:auto; bottom:auto; }
+      .song-detail .s-body p{ font-size:.95rem; line-height:1.85; }
+      .container.container-narrow{ padding-left:16px; padding-right:16px; }
+      .card{ margin-left:auto; margin-right:auto; width:100%; }
+    }
 
     .section{ padding: 36px 0; position:relative; }
-    .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); box-sizing:border-box; width:100%; }
+    .card{ background:#fff; border-radius:12px; border:1px solid rgba(0,0,0,.06); box-shadow:0 6px 16px rgba(0,0,0,.08); box-sizing:border-box; width:100%; position:relative; z-index:2; }
     .btn-yellow{ background-color:#ffd700; color:#000; border:none; }
-    .btn-yellow.cta{ color:#000 !important; font-weight:700; text-shadow:none; font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; }
+    .btn-yellow.cta{ color:#000 !important; font-weight:700; text-shadow:none; }
     .btn-yellow.cta:hover{ color:#fff !important; text-shadow: 1px 1px 0 rgba(110,70,0,.55), 4px 4px 9px rgba(110,70,0,.55); }
     .btn-compact{ display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:.42em 1.05em; border-radius:.45rem; font-size:var(--fs-btn); min-height:44px; }
 
@@ -70,100 +70,88 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
     .modal-song-title{ font-weight:800; }
     .modal-song-desc{ white-space:pre-wrap; line-height:1.6; }
 
-    .song-detail{padding:.25rem 0; overflow:hidden; border-radius:8px; background:transparent;}  
-    .song-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;border-radius:8px;background:rgba(0,0,0,.03);transition:background .25s ease;}      
+    .song-detail{padding:.25rem 0; overflow:hidden; border-radius:8px; background:transparent;}
+    .song-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;border-radius:8px;background:rgba(0,0,0,.03);transition:background .25s ease;}
     .song-detail summary::-webkit-details-marker{display:none;}
-    .song-detail .chev{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #000;transform-origin:50% 40%;transition:transform .48s cubic-bezier(.25,.8,.25,1), border-top-color .48s ease-out;} 
-    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; font-size:var(--fs-hint); }
+    .song-detail .chev{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #000;transform-origin:50% 40%;transition:transform .48s cubic-bezier(.25,.8,.25,1), border-top-color .48s ease-out;}    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; letter-spacing:.01em; font-size:var(--fs-hint); }
+    .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; font-weight:700; letter-spacing:.01em; font-size:var(--fs-title); }
     .song-detail[open] .chev{transform:rotate(-180deg);}    
     .song-detail[open] .hint{opacity:0;} .song-detail[open]{background:rgba(0,0,0,.03);} .song-detail[open] summary{background:transparent;border-radius:8px 8px 0 0;}
-    .song-detail .s-body{padding:.9rem 1rem 2.6rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative;}       
-    .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}  
+    .song-detail .s-body{padding:.9rem 1rem 2.6rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1), opacity .48s ease-out;position:relative; padding-right:clamp(6.5rem,10vw,8.5rem);} 
+    .song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible;}
     .song-detail .s-body p{font-size:var(--fs-body); line-height:1.85; letter-spacing:.01em; margin:0; padding-left:1em; text-indent:0;}
     .song-detail .s-body .flex-fill{max-width:60ch;}
     .song-detail .s-body .d-flex{gap:1rem;}
-    @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} }  
+    @media (max-width:576px){ .song-detail .s-body .flex-fill{max-width:100%;} .song-detail .s-body{ padding-right:1rem; } }
     .song-detail summary:focus-visible{outline:2px solid var(--brand-yellow); outline-offset:2px;}
     .yt-oembed{display:inline-flex;align-items:center;text-decoration:none;}
+
     /* Base style for YouTube badge */
-    .yt-badge{display:inline-flex;align-items:center;gap:.5rem;background:#000;color:#fff;border-radius:9999px;padding:.45rem .7rem;font-weight:700;line-height:1;text-decoration:none;font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;}
+    .yt-badge{display:inline-flex;align-items:center;gap:.5rem;background:#000;color:#fff;border-radius:9999px;padding:.45rem .7rem;font-weight:700;line-height:1;text-decoration:none;}
     .yt-badge span{color:#fff}
     /* Yellow variant to match bottom home button */
     .yt-badge.yt-yellow{ background:var(--brand-yellow); color:#fff; text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45); }
     .yt-oembed:hover .yt-badge.yt-yellow{ filter:brightness(.98); }
     .yt-badge-abs{position:absolute;right:1rem;bottom:1rem;text-decoration:none;}
     .yt-badge svg{width:18px;height:18px;display:block;}
-    .yt-badge svg{width:18px;height:18px;display:block;}
+
     /* ワンポイントラベル */
-    .smoro-tip{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;color:#fff;background:var(--brand-yellow);padding:.2rem .6rem;border-radius:9999px;letter-spacing:.02em;box-shadow:0 1px 3px rgba(0,0,0,.08);text-shadow:0 1px 0 rgba(80,40,0,.45),0 2px 4px rgba(80,40,0,.35);margin-left:1em;}
-    @media (max-width:576px){ .yt-oembed{width:auto;} }
-    /* 曲タイトルは Zen Maru Gothic を優先 */
-    .song-detail .title{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-weight:700; letter-spacing:.01em; font-size:var(--fs-title); }
-    .song-detail .hint{ font-family: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; letter-spacing:.01em; }
+    .smoro-tip{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;color:#fff;background:var(--brand-yellow);padding:.2rem .6rem;border-radius:9999px;letter-spacing:.02em;box-shadow:0 1px 3px rgba(0,0,0,.08);text-shadow:0 1px 0 rgba(80,40,0,.45),0 2px 4px rgba(0,0,0,.35);margin-left:1em;}
 
     footer{ background:#000; color:#fff; padding:28px 0; margin-top:28px; position:relative; z-index:2; }
     footer .footer-note{ margin:.25rem 0; text-align:center; }
-  /* Avoid layout shift when vertical scrollbar appears (keeps width stable) */
-    html{ scrollbar-gutter: stable; }
+    /* Avoid layout shift when vertical scrollbar appears (keeps width stable) */
     @supports not (scrollbar-gutter: stable){ body{ overflow-y: scroll; } }
-  .rec-inline{display:block;text-align:right;letter-spacing:.01em;font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-size:.85rem;font-weight:700;}
-  .btn-bottom-home{ position:relative; z-index:2; }
-/* playlist button: black base, white text, no shadow */
-/* playlist button: black base, white text, visible border */
-.btn-playlist{
-  background:var(--brand-yellow);
-  color:#fff !important;
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 2px 6px rgba(0,0,0,.2);
-  text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45);
-  transition:background-color .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
 
-.btn-playlist:hover{
-  background:#e0c200;
-  color:#fff !important;
-  border-color:rgba(255,255,255,.28);
-  box-shadow:0 3px 10px rgba(0,0,0,.3);
-  text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45);
-}
-/* 常時白文字＆茶色い影を強制 */
-.btn-yellow.cta.btn-bottom-home{ color:#fff !important; text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45) !important; }
-/* hover時も影を消さず背景のみやや暗く */
-.btn-bottom-home:hover{ background:#e0c200; color:#fff !important; filter:brightness(.98); text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45); }
-  /* Ensure layering: tapes (1) < cards/header/footer (2) */ .card{ position:relative; z-index:2; }
-    .container.container-narrow > .mb-3{ position:relative; z-index:2; }
-/* header playlist button position */
-.header-cta{ position:static; margin-left:auto; margin-right:12px; }
-/* alternate card background: white / pale yellow */
-.container.container-narrow > .card{ background:#fff; }
-/* removed tapes */
+    .rec-inline{display:block;text-align:right;letter-spacing:.01em;font-size:.85rem;font-weight:700;}
+    .btn-bottom-home{ position:relative; z-index:2; }
 
+    /* playlist button */
+    .btn-playlist{ background:var(--brand-yellow); color:#fff !important; border:1px solid rgba(255,255,255,.22); box-shadow:0 2px 6px rgba(0,0,0,.2); text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45); transition:background-color .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .btn-playlist:hover{ background:#e0c200; color:#fff !important; border-color:rgba(255,255,255,.28); box-shadow:0 3px 10px rgba(0,0,0,.3); text-shadow:1px 1px 0 rgba(80,40,0,.55), 3px 3px 6px rgba(80,40,0,.45); }
 
-/* frame stripes removed */
+    /* 常時白文字＆茶色い影を強制 */
+    .btn-yellow.cta.btn-bottom-home{ color:#fff !important; text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45) !important; }
+    .btn-bottom-home:hover{ background:#e0c200; color:#fff !important; filter:brightness(.98); text-shadow:1px 1px 0 rgba(80,40,0,.55),3px 3px 6px rgba(80,40,0,.45); }
 
-/* If you want thicker/thinner frame, tweak the left/right <rect width> (now 120) */
-/* --- Responsive hardening (mobile-safe) --- */
-/* Keep card content from being covered by the YouTube badge */
-.song-detail .s-body{ padding-right:8.5rem; }
-@media (max-width:576px){ .song-detail .s-body{ padding-right:7rem; } }
-/* Make long titles wrap nicely on small screens */
-.song-detail .title{ word-break:break-word; hyphens:auto; }
-/* Button sizing & readability on mobile */
-.btn-compact{ min-height:40px; }
-@media (max-width:576px){
-  .btn-compact{ font-size:1rem; padding:.5rem .9rem; }
-  header .brand .brand-title{ font-size:1.25rem; }
-  .song-detail summary{ padding:.55rem .7rem; }
-  .song-detail .s-body{ padding:.7rem .9rem 2.2rem; }
-  .song-detail .s-body p{ font-size:.95rem; line-height:1.8; }
-  .yt-badge-abs{ right:.75rem; bottom:.75rem; }
-}
-/* Reduce motion for users who prefer it */
-@media (prefers-reduced-motion: reduce){
-  .song-detail .s-body{ transition:none; }
-  .song-detail .chev{ transition:none; }
-}
-</style>
+    /* header playlist button position */
+    .header-cta{ position:static; margin-left:auto; margin-right:12px; }
+
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce){ .song-detail .s-body{ transition:none; } .song-detail .chev{ transition:none; } }
+  
+    /* ===== モバイル安定化: 追加ハードニング ===== */
+    html{ -webkit-text-size-adjust:100%; }
+    html, body{ overflow-x:hidden; }
+
+    /* ヘッダー行の折返し耐性（小幅端末でのはみ出し防止） */
+    header.site .container{ flex-wrap:wrap; gap:8px; }
+    header.site .brand{ min-width:0; }
+    header.site .brand .brand-title{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .header-cta{ margin-left:auto; flex-shrink:0; }
+    @media (max-width:480px){ .header-cta{ width:100%; justify-content:center; } }
+
+    /* 極小幅時の詳細サマリーのタップ領域確保 */
+    .song-detail summary{ min-height:44px; }
+
+    /* タイトルや本文の折返し挙動（英数字長文・絵文字混じり対策） */
+    .song-detail .title, .song-detail .s-body p{ overflow-wrap:anywhere; word-break:break-word; hyphens:auto; }
+
+    /* バッジの重なりリスクをさらに低減（極小幅） */
+    @media (max-width:360px){
+      .yt-badge-abs{ position:static; align-self:flex-end; margin-top:.6rem; }
+      .song-detail .s-body{ padding-right:1rem; }
+    }
+
+    /* モーダル内URLの折返し */
+    .modal-song-meta{ word-break:break-all; }
+
+    /* 安全域対応（iOSノッチ等） */
+    @supports(padding: max(0px)){
+      body{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+    }
+    /* ===== 追加分ここまで ===== */
+  </style>
 </head>
 <body>
   <header class="site">
@@ -180,6 +168,8 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
   </header>
   <main class="section">
     <div class="container container-narrow">
+      <!-- ====== Cards start ====== -->
+
       <div class="card p-3 p-md-4 mb-3" id="intro-prisoner">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -200,6 +190,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-monshiro">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -229,6 +220,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-aimyon">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -249,6 +241,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-milet">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -270,7 +263,9 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
             </details>
           </div>
         </div>
-      </div>      <div class="card p-3 p-md-4 mb-3" id="song-ainokedamono">
+      </div>
+
+      <div class="card p-3 p-md-4 mb-3" id="song-ainokedamono">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
             <details class="song-detail">
@@ -290,6 +285,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-natsunihon">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -310,6 +306,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-waltz">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -332,6 +329,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-clarity">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -355,6 +353,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-tattoo">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -375,7 +374,9 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
             </details>
           </div>
         </div>
-      </div>      <div class="card p-3 p-md-4 mb-3" id="song-pretender">
+      </div>
+
+      <div class="card p-3 p-md-4 mb-3" id="song-pretender">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
             <details class="song-detail">
@@ -394,7 +395,9 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
             </details>
           </div>
         </div>
-      </div>      <div class="card p-3 p-md-4 mb-3" id="song-aiwotsutaetai">
+      </div>
+
+      <div class="card p-3 p-md-4 mb-3" id="song-aiwotsutaetai">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
             <details class="song-detail">
@@ -414,6 +417,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-aijanai">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -436,6 +440,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-two">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -458,6 +463,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-shirushi">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -478,6 +484,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-seigi">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -500,6 +507,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-lovetrigger">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -520,6 +528,7 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="card p-3 p-md-4 mb-3" id="song-yuwaku">
         <div class="d-flex flex-column flex-md-row align-items-start gap-3">
           <div class="flex-fill">
@@ -544,11 +553,15 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
           </div>
         </div>
       </div>
+
       <div class="mt-3 mb-2 text-end">
         <a class="btn btn-yellow btn-compact cta btn-bottom-home" href="https://www.kissmolaw.com/" target="_blank" rel="noopener">トップページへ戻る</a>
       </div>
+
+      <!-- ====== Cards end ====== -->
     </div>
   </main>
+
   <!-- フッター -->
   <footer>
     <div class="container container-narrow">
@@ -579,23 +592,94 @@ header .brand .brand-title{ font-family:'Zen Maru Gothic','M PLUS Rounded 1c','K
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   <script>
-(()=>{  // cleaned: removed global tapes generator
-  document.querySelectorAll('a[data-yt-auto]').forEach(a => {
-    const label = a.getAttribute('data-yt-label') || 'YouTubeで再生';
-    a.setAttribute('aria-label', label);
-    a.innerHTML = `
-      <span class="yt-badge">
-        <svg viewBox="0 0 120 84" aria-hidden="true">
-          <rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/>
-          <polygon points="48,25 48,59 79,42" fill="#ffffff"/>
-        </svg>
-        <span>${label}</span>
-      </span>
-    `;
-  });
-})();
-</script>
+  (function(){
+    // バッジ整形 + モーダル再生
+    document.querySelectorAll('a[data-yt-auto]').forEach(a => {
+      const label = a.getAttribute('data-yt-label') || 'YouTubeで再生';
+      a.setAttribute('aria-label', label);
+      a.innerHTML = `
+        <span class="yt-badge">
+          <svg viewBox="0 0 120 84" aria-hidden="true">
+            <rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/>
+            <polygon points="48,25 48,59 79,42" fill="#ffffff"/>
+          </svg>
+          <span>${label}</span>
+        </span>
+      `;
+
+      a.addEventListener('click', function(ev){
+        // 新規タブ意図は尊重
+        if (ev.ctrlKey || ev.metaKey || ev.button === 1) return;
+        ev.preventDefault();
+
+        const href = a.getAttribute('href') || '';
+        const parsed = parseYouTubeURL(href);
+        if (!parsed){ window.open(href, '_blank', 'noopener'); return; }
+        const { id, params } = parsed;
+
+        const card  = a.closest('.card');
+        const title = card?.querySelector('.song-detail .title')?.innerText?.trim() || '';
+        const desc  = card?.querySelector('.song-detail .s-body p')?.innerText?.trim() || '';
+        const embed = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0${params ? '&'+params : ''}`;
+
+        const modalEl = document.getElementById('songModal');
+        const iframe  = modalEl.querySelector('.modal-yt');
+        const mtitle  = modalEl.querySelector('.modal-song-title');
+        const mdesc   = modalEl.querySelector('.modal-song-desc');
+        const mmeta   = modalEl.querySelector('.modal-song-meta');
+        const mlink   = modalEl.querySelector('.modal-footer a');
+
+        iframe.src        = embed;
+        mtitle.textContent= title || 'YouTube';
+        mdesc.textContent = desc || '';
+        mmeta.textContent = href;
+        mlink.href        = href;
+
+        const bsModal = new bootstrap.Modal(modalEl, { keyboard:true });
+        bsModal.show();
+
+        const onHidden = () => { iframe.src = ''; modalEl.removeEventListener('hidden.bs.modal', onHidden); };
+        modalEl.addEventListener('hidden.bs.modal', onHidden);
+      });
+    });
+
+    function parseYouTubeURL(url){
+      try{
+        const u = new URL(url);
+        let id = '';
+        let params = '';
+        if (u.hostname.includes('youtu.be')){
+          id = u.pathname.slice(1);
+          params = u.searchParams.toString().replace(/^(\?|&)/,'');
+        } else if (u.hostname.includes('youtube.com')){
+          if (u.pathname.startsWith('/watch')){
+            id = u.searchParams.get('v');
+            const t = u.searchParams.get('t');
+            params = t ? `start=${parseTimeToSeconds(t)}` : '';
+          } else if (u.pathname.startsWith('/shorts/')){
+            id = u.pathname.split('/')[2];
+          }
+        }
+        if (!id) return null;
+        return { id, params };
+      }catch(e){ return null; }
+    }
+
+    function parseTimeToSeconds(t){
+      if (!t) return 0;
+      if (/^\d+$/.test(t)) return parseInt(t,10);
+      if (/^\d+:\d{1,2}$/.test(t)){
+        const [m,s] = t.split(':').map(n=>parseInt(n,10));
+        return m*60 + s;
+      }
+      const m = /(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/.exec(t);
+      if (!m) return 0;
+      const h = parseInt(m[1]||0,10), mm=parseInt(m[2]||0,10), ss=parseInt(m[3]||0,10);
+      return h*3600 + mm*60 + ss;
+    }
+  })();
+  </script>
 </body>
 </html>
