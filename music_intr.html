@@ -78,15 +78,22 @@ iframe.setAttribute('allowfullscreen','');
 iframe.setAttribute('title','YouTube video player');
 iframe.setAttribute('loading','lazy');
 wrap.appendChild(iframe);
-// サムネイルを先に表示（maxres→hqの順でフォールバック）
+// サムネイルを先に表示（HQ先→MAXRESへアップグレード）
 var thumb=document.createElement('div');
 thumb.className='yt-thumb';
 var timg=document.createElement('img');
 timg.alt='';
 timg.decoding='async';
 timg.referrerPolicy='no-referrer';
-timg.src='https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg';
-timg.onerror=function(){ this.onerror=null; this.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'; };
+// まず hqdefault（確実にある）を即表示
+var hq='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';
+var mx='https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg';
+timg.src=hq;
+// MAXRES が取れたら差し替え（失敗しても hq のまま）
+var hi=new Image();
+hi.referrerPolicy='no-referrer';
+hi.onload=function(){ timg.src=mx; };
+hi.src=mx;
 thumb.appendChild(timg);
 wrap.appendChild(thumb);
 // 事前ロードは行わず、開かれたタイミングで読み込み開始（軽量化）
