@@ -119,7 +119,14 @@ iframe.addEventListener('load', function(){
 });
 if(detailsEl){
   detailsEl.addEventListener('toggle', function(){
-    if(detailsEl.open && ready){ reveal(); }
+    if(detailsEl.open){
+      // 可視化を待たずに即表示（黒フレームが短時間見える場合あり）
+      iframe.classList.add('ready');
+      // Safari/iOS などで読み込みが遅延するケースに備えて再設定でトリガー
+      var s = iframe.src; iframe.src = s;
+      // 読み込み完了後は改めてスムーズ表示
+      if(ready){ reveal(); }
+    }
   });
 }
 var desc=sBody.querySelector('.flex-fill');
