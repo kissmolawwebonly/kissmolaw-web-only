@@ -116,6 +116,24 @@ if(detailsEl){
     if(detailsEl.open){
       start();
       if(ready){ reveal(); }
+      // ☆ 次の曲をこっそりウォームアップ（重くしない範囲で最大2件）
+      (function warmNext(){
+        var card = sBody.closest('.card');
+        var n = 0, el = card;
+        while(el && n < 2){
+          el = el.nextElementSibling;
+          if(!el) break;
+          var ifr = el.querySelector('iframe.yt-inline');
+          if(ifr && !ifr.src && ifr.dataset && ifr.dataset.src){
+            if('requestIdleCallback' in window){
+              requestIdleCallback(function(){ if(!ifr.src) ifr.src = ifr.dataset.src; }, {timeout: 800});
+            }else{
+              setTimeout(function(){ if(!ifr.src) ifr.src = ifr.dataset.src; }, 200);
+            }
+            n++;
+          }
+        }
+      })();
     }
   });
   // 初期状態ですでに開いている場合
