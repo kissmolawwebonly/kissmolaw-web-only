@@ -77,6 +77,32 @@ iframe.setAttribute('title','YouTube video player');
 iframe.setAttribute('loading','lazy');
 wrap.appendChild(iframe);
 
+// プルダウン前に“こっそり”読み込みを進める（近づいたら eager に切替）
+(function(){
+  var summaryEl = (sBody.closest('details')||{}).querySelector ? sBody.closest('details').querySelector('summary') : null;
+  function warmIframe(){
+    if(iframe.dataset.warmed) return;
+    iframe.dataset.warmed='1';
+    iframe.setAttribute('loading','eager');
+    iframe.setAttribute('fetchpriority','high');
+    // ブラウザによっては eager 反映にトリガーが必要なため微小な再設定
+    // （同一値再設定でネットワーク開始を促す）
+    var s = iframe.src; iframe.src = s;
+  }
+  if('IntersectionObserver' in window && summaryEl){
+    var ioWarm = new IntersectionObserver(function(entries,obs){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          if('requestIdleCallback' in window){ requestIdleCallback(warmIframe,{timeout:500}); }
+          else { setTimeout(warmIframe,0); }
+          obs.unobserve(summaryEl);
+        }
+      });
+    }, {root:null, rootMargin:'1000px', threshold:0.01});
+    ioWarm.observe(summaryEl);
+  }
+})();
+
 // 露出タイミングは黒フレーム回避のため少し遅らせて可視化
 var detailsEl = sBody.closest('details');
 var ready=false;
