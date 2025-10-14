@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="ja"><head><link rel="preconnect" href="https://www.youtube.com"><link rel="preconnect" href="https://i.ytimg.com"><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#000000"/><title>曲紹介｜キスもろくにできねェの？</title><link rel="icon" type="image/png" sizes="16x16" href="kissmolaw_logo.png?v=fav1">
+<!DOCTYPE html><html lang="ja"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://www.youtube.com"><link rel="preconnect" href="https://i.ytimg.com"><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#000000"/><title>曲紹介｜キスもろくにできねェの？</title><link rel="icon" type="image/png" sizes="16x16" href="kissmolaw_logo.png?v=fav1">
 <link rel="icon" type="image/png" sizes="32x32" href="kissmolaw_logo.png?v=fav1">
 <link rel="icon" type="image/png" sizes="192x192" href="kissmolaw_logo.png?v=fav1">
 <link rel="apple-touch-icon" href="kissmolaw_logo.png?v=fav1">
@@ -61,21 +61,49 @@ html, body, body *:not(svg):not(svg *):not(code):not(kbd):not(pre){
   a.textContent='トップページへ戻る';
   row.appendChild(a);
   cardsWrap.appendChild(row); // コンテナ内の最後に追加してカード右端と揃える
-})();</script><script>(function(){function d(s){if(!s)return!1;for(var i=0;i<s.length;i++){var c=s[i];if(c<'0'||c>'9')return!1}return!0}function T(x){if(!x)return 0;if(d(x))return parseInt(x,10);if(x.indexOf(':')!==-1){var p=x.split(':');if(p.length===2)return parseInt(p[0]||'0',10)*60+parseInt(p[1]||'0',10);if(p.length===3)return parseInt(p[0]||'0',10)*3600+parseInt(p[1]||'0',10)*60+parseInt(p[2]||'0',10)}var n=0,m='';for(var j=0;j<x.length;j++){var ch=x[j];if(ch>='0'&&ch<='9')m+=ch;else if(ch==='h'){n+=parseInt(m||'0',10)*3600;m=''}else if(ch==='m'){n+=parseInt(m||'0',10)*60;m=''}else if(ch==='s'){n+=parseInt(m||'0',10);m=''}}if(m)n+=parseInt(m,10);return n}function P(url){try{var u=new URL(url),id='',params='';if(u.hostname.indexOf('youtu.be')!==-1){id=u.pathname.replace('/','');params=u.searchParams.toString()}else if(u.hostname.indexOf('youtube.com')!==-1){if(u.pathname.indexOf('/watch')===0){id=u.searchParams.get('v');var t=u.searchParams.get('t'),sec=T(t);if(sec>0)params='start='+sec}else if(u.pathname.indexOf('/shorts/')===0){var parts=u.pathname.split('/');id=(parts[2]||'').trim()}}if(!id)return null;return{id,params}}catch(e){return null}}function inject(){document.querySelectorAll('a[data-yt-auto]').forEach(function(a){var href=a.getAttribute('href')||'',parsed=P(href),sBody=a.closest('.s-body');if(!parsed||!sBody){a.remove();return}var id=parsed.id,params=parsed.params,src='https://www.youtube.com/embed/'+id+'?rel=0'+(params?('&'+params):''),wrap=document.createElement('div');wrap.className='yt-inline-wrap';var iframe=document.createElement('iframe');
-iframe.className='yt-inline';
-iframe.src = src;
-iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-iframe.setAttribute('allowfullscreen','');
-iframe.setAttribute('title','YouTube video player');
-wrap.appendChild(iframe);
-var desc=sBody.querySelector('.flex-fill');
-if(desc) sBody.insertBefore(wrap,desc); else sBody.prepend(wrap);
-// 特定カード（お手やわらかに）だけ注釈を表示
-var cardEl = sBody.closest('.card');
-if(cardEl && cardEl.id === 'song-oteyawa'){
-  var note = document.createElement('div');
-  note.className = 'yt-note';
-  note.textContent = 'この動画はYoutubeによって自動生成されており、著作権上の問題はありません';
-  if(desc) sBody.insertBefore(note, desc); else sBody.appendChild(note);
+})();</script><script>(function(){
+// --- helpers ---
+function isDigits(s){if(!s)return!1;for(var i=0;i<s.length;i++){var c=s[i];if(c<'0'||c>'9')return!1}return!0}
+function toSeconds(x){if(!x)return 0;if(isDigits(x))return parseInt(x,10);if(x.indexOf(':')!==-1){var p=x.split(':');if(p.length===2)return parseInt(p[0]||'0',10)*60+parseInt(p[1]||'0',10);if(p.length===3)return parseInt(p[0]||'0',10)*3600+parseInt(p[1]||'0',10)*60+parseInt(p[2]||'0',10)}var n=0,m='';for(var j=0;j<x.length;j++){var ch=x[j];if(ch>='0'&&ch<='9')m+=ch;else if(ch==='h'){n+=parseInt(m||'0',10)*3600;m=''}else if(ch==='m'){n+=parseInt(m||'0',10)*60;m=''}else if(ch==='s'){n+=parseInt(m||'0',10);m=''}}if(m)n+=parseInt(m,10);return n}
+function parseYouTube(url){try{var u=new URL(url),id='',params='';if(u.hostname.indexOf('youtu.be')!==-1){id=u.pathname.replace('/','');params=u.searchParams.toString()}else if(u.hostname.indexOf('youtube.com')!==-1){if(u.pathname.indexOf('/watch')===0){id=u.searchParams.get('v');var t=u.searchParams.get('t'),sec=toSeconds(t);if(sec>0)params='start='+sec}else if(u.pathname.indexOf('/shorts/')===0){var parts=u.pathname.split('/');id=(parts[2]||'').trim()}}if(!id)return null;return{id,params}}catch(e){return null}}
+
+function inject(){
+  document.querySelectorAll('a[data-yt-auto]').forEach(function(a){
+    var href=a.getAttribute('href')||'';
+    var parsed=parseYouTube(href);
+    var sBody=a.closest('.s-body');
+    if(!parsed||!sBody){return}
+    var id=parsed.id, params=parsed.params;
+    var src='https://www.youtube.com/embed/'+id+'?rel=0'+(params?('&'+params):'');
+    var detailsEl=sBody.closest('details');
+    if(!detailsEl) return;
+    var injected=false;
+    function mount(){
+      if(injected) return; injected=true;
+      var wrap=document.createElement('div');
+      wrap.className='yt-inline-wrap';
+      var iframe=document.createElement('iframe');
+      iframe.className='yt-inline';
+      iframe.src=src;
+      iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen','');
+      iframe.setAttribute('title','YouTube video player');
+      wrap.appendChild(iframe);
+      var desc=sBody.querySelector('.flex-fill');
+      if(desc) sBody.insertBefore(wrap,desc); else sBody.prepend(wrap);
+      // 「お手やわらかに」だけ注釈
+      var cardEl=sBody.closest('.card');
+      if(cardEl && cardEl.id==='song-oteyawa'){
+        var note=document.createElement('div');
+        note.className='yt-note';
+        note.textContent='この動画はYoutubeによって自動生成されており、著作権上の問題はありません';
+        if(desc) sBody.insertBefore(note,desc); else sBody.appendChild(note);
+      }
+      a.remove();
+    }
+    if(detailsEl.open){ mount(); }
+    detailsEl.addEventListener('toggle', function onT(){ if(detailsEl.open){ mount(); detailsEl.removeEventListener('toggle', onT); } });
+  });
 }
-a.remove()})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();})();</script></body></html>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();
+})();</script></body></html>
