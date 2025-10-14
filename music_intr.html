@@ -69,9 +69,8 @@ html, body, body *:not(svg):not(svg *):not(code):not(kbd):not(pre){
   cardsWrap.appendChild(row); // コンテナ内の最後に追加してカード右端と揃える
 })();</script><script>(function(){function d(s){if(!s)return!1;for(var i=0;i<s.length;i++){var c=s[i];if(c<'0'||c>'9')return!1}return!0}function T(x){if(!x)return 0;if(d(x))return parseInt(x,10);if(x.indexOf(':')!==-1){var p=x.split(':');if(p.length===2)return parseInt(p[0]||'0',10)*60+parseInt(p[1]||'0',10);if(p.length===3)return parseInt(p[0]||'0',10)*3600+parseInt(p[1]||'0',10)*60+parseInt(p[2]||'0',10)}var n=0,m='';for(var j=0;j<x.length;j++){var ch=x[j];if(ch>='0'&&ch<='9')m+=ch;else if(ch==='h'){n+=parseInt(m||'0',10)*3600;m=''}else if(ch==='m'){n+=parseInt(m||'0',10)*60;m=''}else if(ch==='s'){n+=parseInt(m||'0',10);m=''}}if(m)n+=parseInt(m,10);return n}function P(url){try{var u=new URL(url),id='',params='';if(u.hostname.indexOf('youtu.be')!==-1){id=u.pathname.replace('/','');params=u.searchParams.toString()}else if(u.hostname.indexOf('youtube.com')!==-1){if(u.pathname.indexOf('/watch')===0){id=u.searchParams.get('v');var t=u.searchParams.get('t'),sec=T(t);if(sec>0)params='start='+sec}else if(u.pathname.indexOf('/shorts/')===0){var parts=u.pathname.split('/');id=(parts[2]||'').trim()}}if(!id)return null;return{id,params}}catch(e){return null}}function inject(){document.querySelectorAll('a[data-yt-auto]').forEach(function(a){var href=a.getAttribute('href')||'',parsed=P(href),sBody=a.closest('.s-body');if(!parsed||!sBody){a.remove();return}var id=parsed.id,params=parsed.params,src='https://www.youtube.com/embed/'+id+'?rel=0'+(params?('&'+params):''),wrap=document.createElement('div');wrap.className='yt-inline-wrap';var iframe=document.createElement('iframe');
 iframe.className='yt-inline';
-// 遅延読み込み（見えたらsrcを入れる）
+// プルダウン前に読み込み開始（事前ロード）
 iframe.dataset.src = src;
-iframe.setAttribute('loading','lazy');
 iframe.setAttribute('fetchpriority','low');
 iframe.setAttribute('referrerpolicy','origin-when-cross-origin');
 iframe.setAttribute('allow','accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
@@ -89,24 +88,14 @@ timg.src='https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg';
 timg.onerror=function(){ this.onerror=null; this.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'; };
 thumb.appendChild(timg);
 wrap.appendChild(thumb);
-// iframe読込完了でサムネを除去
-iframe.addEventListener('load',function(){ if(thumb&&thumb.parentNode){ thumb.parentNode.removeChild(thumb); } iframe.classList.add('ready'); });
-// IntersectionObserverでビューポート付近で初回ロード
-if('IntersectionObserver' in window){
-  var io = new IntersectionObserver(function(entries, obs){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        var el = entry.target;
-        if(el && !el.src && el.dataset.src){ el.src = el.dataset.src; }
-        obs.unobserve(el);
-      }
-    });
-  }, {root:null, rootMargin:'200px', threshold:0.01});
-  io.observe(iframe);
-} else {
-  // フォールバック
-  iframe.src = iframe.dataset.src;
-}
+// すぐに読み込みを開始
+iframe.src = iframe.dataset.src;
+// 読み込み完了フラグ（開いたタイミングでサムネを外す）
+var ready=false;
+iframe.addEventListener('load',function(){ ready=true; if(sBody.closest('details')?.open){ if(thumb&&thumb.parentNode){ thumb.parentNode.removeChild(thumb); } iframe.classList.add('ready'); }});
+// details が開いたら、読み込み済みなら即サムネを外す
+var detailsEl = sBody.closest('details');
+if(detailsEl){ detailsEl.addEventListener('toggle', function(){ if(detailsEl.open && ready){ if(thumb&&thumb.parentNode){ thumb.parentNode.removeChild(thumb); } iframe.classList.add('ready'); } }); }
 var desc=sBody.querySelector('.flex-fill');
 if(desc) sBody.insertBefore(wrap,desc); else sBody.prepend(wrap);
 // 特定カード（お手やわらかに）だけ注釈を表示
