@@ -68,6 +68,8 @@ function toSeconds(x){if(!x)return 0;if(isDigits(x))return parseInt(x,10);if(x.i
 function parseYouTube(url){try{var u=new URL(url),id='',params='';if(u.hostname.indexOf('youtu.be')!==-1){id=u.pathname.replace('/','');params=u.searchParams.toString()}else if(u.hostname.indexOf('youtube.com')!==-1){if(u.pathname.indexOf('/watch')===0){id=u.searchParams.get('v');var t=u.searchParams.get('t'),sec=toSeconds(t);if(sec>0)params='start='+sec}else if(u.pathname.indexOf('/shorts/')===0){var parts=u.pathname.split('/');id=(parts[2]||'').trim()}}if(!id)return null;return{id,params}}catch(e){return null}}
 
 function inject(){
+  // すべての曲カードのマウント関数を順序付きに登録
+  window.__ytReg = [];
   document.querySelectorAll('a[data-yt-auto]').forEach(function(a){
     var href=a.getAttribute('href')||'';
     var parsed=parseYouTube(href);
@@ -101,8 +103,34 @@ function inject(){
       }
       a.remove();
     }
-    if(detailsEl.open){ mount(); }
-    detailsEl.addEventListener('toggle', function onT(){ if(detailsEl.open){ mount(); detailsEl.removeEventListener('toggle', onT); } });
+    // このカードのエントリを順序付きで保存
+    var entry = { detailsEl: detailsEl, mount: mount };
+    window.__ytReg.push(entry);
+    var myIndex = window.__ytReg.length - 1;
+    // となりのカードをこっそり先行マウント（最大2件）
+    function warmNext(){
+      for(var k=1;k<=2;k++){
+        (function(targetIndex){
+          var e = window.__ytReg[targetIndex];
+          if(!e || !e.detailsEl || e.detailsEl.open) return;
+          if('requestIdleCallback' in window){
+            requestIdleCallback(function(){ e.mount(); }, {timeout:1200});
+          } else {
+            setTimeout(function(){ e.mount(); }, 200*k);
+          }
+        })(myIndex + k);
+      }
+    }
+    // すでに開いていれば即マウント＋次カードを温め
+    if(detailsEl.open){ mount(); warmNext(); }
+    // 初回オープン時にマウントし、ついでに次カードを温め
+    detailsEl.addEventListener('toggle', function onT(){
+      if(detailsEl.open){
+        mount();
+        warmNext();
+        detailsEl.removeEventListener('toggle', onT);
+      }
+    });
   });
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();
