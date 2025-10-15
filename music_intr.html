@@ -127,6 +127,13 @@ document.getElementById('cards').innerHTML = SONGS.map(cardHTML).join('');
     // 追加テスト: すべての曲に title と url が存在
     console.assert(SONGS.every(s=>typeof s.title==='string' && s.title.length>0), 'title が空の曲があります');
     console.assert(SONGS.every(s=>typeof s.url==='string' && s.url.startsWith('http')), 'url が不正な曲があります');
+    // 追加テスト: YouTube URL パーサの基本検証
+    (function(){
+      var p1 = parseYouTube('https://youtu.be/IxxstCcJlsc?si=abc');
+      var p2 = parseYouTube('https://www.youtube.com/watch?v=IxxstCcJlsc&t=1m3s');
+      console.assert(p1 && p1.id, 'parseYouTube youtu.be 失敗');
+      console.assert(p2 && p2.id && /start=/.test(p2.params||''), 'parseYouTube watch 失敗');
+    })();
   }catch(e){ /* noop */ }
 })();
 </script><script>(function(){
@@ -175,27 +182,39 @@ function inject(){
     var entry = { detailsEl: detailsEl, mount: mount };
     window.__ytReg.push(entry);
     var myIndex = window.__ytReg.length - 1;
-    // となりのカードをこっそり先行マウント（最大2件）
-    function warmNext(){
-      for(var k=1;k<=2;k++){
+    // となりのカードをこっそり先行マウント（前後±4件）
+    function warmAround(){
+      var COUNT = 4; // 前後に何枚ずつ温めるか
+      for(var k=1; k<=COUNT; k++){
+        // 後ろ側（+k）
         (function(targetIndex){
           var e = window.__ytReg[targetIndex];
           if(!e || !e.detailsEl || e.detailsEl.open) return;
           if('requestIdleCallback' in window){
             requestIdleCallback(function(){ e.mount(); }, {timeout:1200});
           } else {
-            setTimeout(function(){ e.mount(); }, 200*k);
+            setTimeout(function(){ e.mount(); }, 120*k);
           }
         })(myIndex + k);
+        // 前側（-k）
+        (function(targetIndex){
+          var e = window.__ytReg[targetIndex];
+          if(!e || !e.detailsEl || e.detailsEl.open) return;
+          if('requestIdleCallback' in window){
+            requestIdleCallback(function(){ e.mount(); }, {timeout:1200});
+          } else {
+            setTimeout(function(){ e.mount(); }, 120*k);
+          }
+        })(myIndex - k);
       }
     }
-    // すでに開いていれば即マウント＋次カードを温め
-    if(detailsEl.open){ mount(); warmNext(); }
-    // 初回オープン時にマウントし、ついでに次カードを温め
+    // すでに開いていれば即マウント＋周辺を温め
+    if(detailsEl.open){ mount(); warmAround(); }
+    // 初回オープン時にマウントし、ついでに周辺を温め
     detailsEl.addEventListener('toggle', function onT(){
       if(detailsEl.open){
         mount();
-        warmNext();
+        warmAround();
         detailsEl.removeEventListener('toggle', onT);
       }
     });
@@ -212,8 +231,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     if(save) return; // データセーバー/低速は実施しない
 
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    var perStage = 3;                     // 1ステージで読み込む枚数
-    var maxTotal = isMobile ? 6 : 12;     // 総上限（安全枠）
+    var perStage = isMobile ? 3 : 4;                     // 1ステージで読み込む枚数
+    var maxTotal = isMobile ? 8 : 12;     // 総上限（安全枠）
 
     var stage = 0;                        // 0 → 1(1000ms) → 2(2000ms) → ...
     var targetMounted = 0;                // 目標枚数（段階に応じて増やす）
