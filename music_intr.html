@@ -73,7 +73,8 @@ const SONGS = [
   {id:"song-unbelievers",title:"Unbelievers / 米津玄師",desc:`本来ならば相容れない関係性である二人が愛し合う事は、傍から見たら異端で、極親しい人以外からは祝福はされず、むしろ裏切り者だと罵られ追放されてしまうのではないか…それでも半ば逃避行のように愛を貫いて、二人の桃源郷を夢見て行く末で笑い合おう、という感じが物凄くスモロみを感じて、この曲をイメソンとさせていただきました。<br>いわば逆境スモロ曲です。<br>力強く前を向こうとする曲調も、真っ直ぐに意を貫く二人っぽくてとっても良いなと思いました。<br><span class=\"rec-inline\">推薦：るみさん@pinosan_love</span>`,url:"https://youtu.be/qUHpfrImYK8?si=7o2Zo8WDpq2AW6M_"},
   {id:"song-kyokaisen",title:"境界線 / amazarashi",desc:`タイトルそのままに、PHで境界線を挟んで座っていた彼らの心境を歌うような曲です。「境界線」「正義」「故郷の残像」「僕らは共犯者」など、ｽﾓﾛ…!!!となる単語が散りばめられています。`,url:"https://youtu.be/gB3gUq5A1W0?si=QCxUgeUExHywJ3vZ"},
   // ← この直下に新曲を差し込み
-  {id:"song-andante",title:"アンダンテ / 矢井田瞳",desc:`原作軸の二人をイメージしながら聴いています。スモ←ロで、互いの立場がありながらもずるずると関係を持っている……そんなローさん目線の曲だと思ってます。歌い出しの『あなたは容赦なく正しいことを言う』で、あぁ、スモやんぽいなぁ、と感じて、サビの『本気になんてならなくていい』はローさんの強がり＆立場もあるし半分本音だと思ったらもうスモロにしか思えなくなりました。ぜひ聴いてみてください。`,url:"https://youtu.be/2bpoDP9Ggr4?si=sLhtx4wjAkxXu65O"}
+  {id:"song-andante",title:"アンダンテ / 矢井田瞳",desc:`原作軸の二人をイメージしながら聴いています。スモ←ロで、互いの立場がありながらもずるずると関係を持っている……そんなローさん目線の曲だと思ってます。歌い出しの『あなたは容赦なく正しいことを言う』で、あぁ、スモやんぽいなぁ、と感じて、サビの『本気になんてならなくていい』はローさんの強がり＆立場もあるし半分本音だと思ったらもうスモロにしか思えなくなりました。ぜひ聴いてみてください。`,url:"https://youtu.be/2bpoDP9Ggr4?si=sLhtx4wjAkxXu65O"},
+  {id:"song-rasenkaidan",title:"螺旋階段 / 椿屋四重奏",desc:`全体的にPH付近の2人の雰囲気を感じるんですが、『力任せに求めて隙間なく愛で染めて 朝がくれば消えてしまうから』の部分に特にスモロみ感じてます。`,url:"https://youtu.be/m6Zh8noRsVc?si=S-tOx6Sf3j6aIAqX"}
 ];
 
 function cardHTML(s){
@@ -184,7 +185,8 @@ function inject(){
     var myIndex = window.__ytReg.length - 1;
     // となりのカードをこっそり先行マウント（前後±4件）
     function warmAround(){
-      var COUNT = 4; // 前後に何枚ずつ温めるか
+      var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      var COUNT = isMobile ? 4 : 2; // 前後に何枚ずつ温めるか（PCは控えめ）
       for(var k=1; k<=COUNT; k++){
         // 後ろ側（+k）
         (function(targetIndex){
@@ -209,12 +211,12 @@ function inject(){
       }
     }
     // すでに開いていれば即マウント＋周辺を温め
-    if(detailsEl.open){ mount(); warmAround(); }
+    if(detailsEl.open){ mount(); setTimeout(warmAround, 800); }
     // 初回オープン時にマウントし、ついでに周辺を温め
     detailsEl.addEventListener('toggle', function onT(){
       if(detailsEl.open){
         mount();
-        warmAround();
+        setTimeout(warmAround, 800);
         detailsEl.removeEventListener('toggle', onT);
       }
     });
@@ -231,7 +233,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     if(save) return; // データセーバー/低速は実施しない
 
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    var perStage = isMobile ? 3 : 4;                     // 1ステージで読み込む枚数
+    var perStage = 3;                     // 1ステージで読み込む枚数
     var maxTotal = isMobile ? 8 : 12;     // 総上限（安全枠）
 
     var stage = 0;                        // 0 → 1(1000ms) → 2(2000ms) → ...
