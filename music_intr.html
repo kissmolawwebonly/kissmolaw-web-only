@@ -47,7 +47,7 @@ html, body, body *:not(svg):not(svg *):not(code):not(kbd):not(pre){
 .back-row{margin-top:.5rem;margin-bottom:.5rem;text-align:right}
 
 </style></head><body><header class="site"><div class="container container-narrow d-flex justify-content-between align-items-center"><div class="brand"><strong class="brand-title">&emsp;曲紹介</strong></div><a class="btn btn-yellow btn-compact cta btn-bottom-home d-inline-flex align-items-center gap-2 header-cta" href="https://youtube.com/playlist?list=PLYYqulEPPCR44hqXyvQwrGzKZiNwofDRS&si=JrCVMddFM3Xkq4JA" target="_blank" rel="noopener"><svg viewBox="0 0 120 84" aria-hidden="true" width="18" height="18" style="flex:0 0 18px"><rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/><polygon points="48,25 48,59 79,42" fill="#ffffff"/></svg><span>プレイリストを聴く</span></a></div></header><main class="section"><div class="container container-narrow" id="cards"></div></main><footer><div class="container container-narrow"><p class="footer-note">本サイトは非公式ファンサイトです</p><p class="footer-note">お問い合わせは主催 <a href="https://x.com/kissmolaw" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Xアカウント</a><br>または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p></div></footer><script>
-// 曲データ（見た目・順序は既存と同じ。新規: アンダンテ を境界線の直下に追加）
+// 曲データ（見た目・順序は既存と同じ）
 const SONGS = [
   {id:"intro-prisoner",title:"Prisoner Of Love / 宇多田ヒカル",desc:`秘密をさらけ出せないせつない歌詞とメロディがとてもスモロです`,url:"https://youtu.be/6bDyqwwH4Xs?si=5syNttyjmoLWLrri"},
   {id:"song-monshiro",title:"紋白蝶 feat.石原慎也 (Saucy Dog) / TOKYO SKA PARADISE ORCHESTRA",desc:`全体的にかなり現代チックなジャズですが、歌詞中にある、<br>『なんだったんって恋をしよう』<br>『惚れたらきっと負けな気がして 分かってたって君に勝てない』<br>などが、個人的に🚬🐯みを感じるなと。<br>🐯に言ってほしい歌詞もあるし、🚬🐯がお互いに思っていてほしい歌詞もある。<br>海兵と海賊である2人は、お互いに過ちを犯すことを遊び程度と思わせているが、本心ではそう思っていない。🐯を欲しがって🚬を欲しがって、迷いもなく過ちを犯す。ただの未来だから。緩急のあるジャズも🚬🐯に似合うなぁと思っていたり…。<br>モンシロチョウは黒と白の蝶々ですし、心做しか🐯の帽子に似ていたり…。<br>そんな『紋白蝶』が私にとっての🚬🐯イメソンです。`,url:"https://youtu.be/O5VhnfkSjgA?si=bGopRyXByXWczwx4"},
@@ -67,12 +67,11 @@ const SONGS = [
   {id:"song-seigi",title:"正義 / ずっと真夜中でいいのに。",desc:`解釈の余地が広い曲です。言葉遊びが多い中に、互いの関係に名前がつかない・つけようのない二人の雰囲気を感じます。さらには、近づいて遠のいてと、距離を測り合い続ける感じが、海賊と海兵という立場にある二人を表しているようです。<br>２番にある『悪いことしてなくても秘密を隠し通すことが正義なら』は、特にPH編の対ヴェルゴ戦を彷彿とさせる一節です。`,url:"https://youtu.be/7kUbX4DoZoc?si=ZiJNV8nutwJzHY_i"},
   {id:"song-lovetrigger",title:"LOVE TRIGGER / Snow Man",desc:`こちらの曲からは、現パロな二人を想像します。互いの魅力に惹かれていく様を描いた歌詞と、大人な雰囲気を感じる曲調がすてきです。I Don't Like Mondays.さんver.も最近出ていますので、アニメ主題歌つながりでそちらもおすすめです。`,url:"https://youtu.be/eybKo4WgvgU?si=DTXmshlPr4jEQf4R"},
   {id:"song-yuwaku",title:"誘惑 / GLAY",desc:`死地に臨むにあたって二度と会えなくなるかもしれない海兵をダメ元で今夜限りだからと艷っぽく誘うローくんと、駄目だと思ってるのにどうにも気になって仕方がない海賊が何かを隠した瞳で誘ってくるのに乗って刻みつけるみたいに思い切り抱く漢スモーカーの歌です<br>海兵も海賊も立場も道理も何もかも見ないふりして互いの体に溺れていたい、そんなインモラルな一夜の雰囲気がまさに未成立スモロのスケベという感じがしています<br>スモロというカプにおける髪が額に張り付くような湿度とエロス、それを体現した歌だと思います<br><span class=\"rec-inline\">推薦：パタヤビーチさん@attaka_ofutun</span>`,url:"https://youtu.be/fGlDHwlq5SQ?si=UkzVwGPqECc3gvy1"},
-  {id:"song-oteyawa",title:"お手やわらかに / 夏木マリ",desc:`ちょっと乙女思考なローになってはしまうのですが、シチュエーションがめちゃスモロ初夜なのでぜひご拝聴願います。『遊んだふりをしていただけで　ほんとは初心なの』←そんなこととっくにご存知のスモに優しく(しようとしたが結局押さえきれず激しくねっちねちのアッチアチに)抱かれてしまう…。そんな甘口スモロイメージソングです。<br>PHで「俺の別荘に何の用だ…白猟屋」してる裏で脳内乙女ローが「こんな果てまで追いかけてきて…ﾄﾞｷﾄﾞｷ」と抱かれる覚悟を固めてもいいなって思います。`,url:"https://youtu.be/fRG9i9Zr3bw?si=X2Ea3r2lu7CrPDDr"},
+  {id:"song-oteyawa",title:"お手やわらかに / 中嶋美智代",desc:`ちょっと乙女思考なローになってはしまうのですが、シチュエーションがめちゃスモロ初夜なのでぜひご拝聴願います。『遊んだふりをしていただけで　ほんとは初心なの』←そんなこととっくにご存知のスモに優しく(しようとしたが結局押さえきれず激しくねっちねちのアッチアチに)抱かれてしまう…。そんな甘口スモロイメージソングです。<br>PHで「俺の別荘に何の用だ…白猟屋」してる裏で脳内乙女ローが「こんな果てまで追いかけてきて…ﾄﾞｷﾄﾞｷ」と抱かれる覚悟を固めてもいいなって思います。`,url:"https://youtu.be/R5t7YdhfY48?si=vMY6IRO0vPm_X3Vs"},
   {id:"song-konayuki",title:"粉雪 / レミオロメン",desc:`『粉雪 ねえ 心まで白く染められたなら 二人の孤独を分け合うことが出来たのかい』 の歌詞でいつもPH編の二人を連想してしまいます`,url:"https://youtu.be/1wxTksLZ1Mw?si=vKF2sbLsF6bdm8jB"},
   {id:"song-okaeri",title:"おかえり / Tani Yuuki",desc:`同じ空の下、同じ海の上、離れた場所にいるお互いを想うスモロを想像してしまう曲です。『目を逸らさないで どこへ行ってもお互いを見つけられるように』という歌詞で、思わず彼らの瞳の色を思い出してしまいます…！`,url:"https://youtu.be/0ZsP6MVjFIo?si=6e_JqbjM32WR4uru"},
   {id:"song-unbelievers",title:"Unbelievers / 米津玄師",desc:`本来ならば相容れない関係性である二人が愛し合う事は、傍から見たら異端で、極親しい人以外からは祝福はされず、むしろ裏切り者だと罵られ追放されてしまうのではないか…それでも半ば逃避行のように愛を貫いて、二人の桃源郷を夢見て行く末で笑い合おう、という感じが物凄くスモロみを感じて、この曲をイメソンとさせていただきました。<br>いわば逆境スモロ曲です。<br>力強く前を向こうとする曲調も、真っ直ぐに意を貫く二人っぽくてとっても良いなと思いました。<br><span class=\"rec-inline\">推薦：るみさん@pinosan_love</span>`,url:"https://youtu.be/qUHpfrImYK8?si=7o2Zo8WDpq2AW6M_"},
   {id:"song-kyokaisen",title:"境界線 / amazarashi",desc:`タイトルそのままに、PHで境界線を挟んで座っていた彼らの心境を歌うような曲です。「境界線」「正義」「故郷の残像」「僕らは共犯者」など、ｽﾓﾛ…!!!となる単語が散りばめられています。`,url:"https://youtu.be/gB3gUq5A1W0?si=QCxUgeUExHywJ3vZ"},
-  // ← この直下に新曲を差し込み
   {id:"song-andante",title:"アンダンテ / 矢井田瞳",desc:`原作軸の二人をイメージしながら聴いています。スモ←ロで、互いの立場がありながらもずるずると関係を持っている……そんなローさん目線の曲だと思ってます。歌い出しの『あなたは容赦なく正しいことを言う』で、あぁ、スモやんぽいなぁ、と感じて、サビの『本気になんてならなくていい』はローさんの強がり＆立場もあるし半分本音だと思ったらもうスモロにしか思えなくなりました。ぜひ聴いてみてください。`,url:"https://youtu.be/2bpoDP9Ggr4?si=sLhtx4wjAkxXu65O"},
   {id:"song-rasenkaidan",title:"螺旋階段 / 椿屋四重奏",desc:`全体的にPH付近の2人の雰囲気を感じるんですが、『力任せに求めて隙間なく愛で染めて 朝がくれば消えてしまうから』の部分に特にスモロみ感じてます。`,url:"https://youtu.be/m6Zh8noRsVc?si=S-tOx6Sf3j6aIAqX"}
 ];
@@ -123,6 +122,7 @@ document.getElementById('cards').innerHTML = SONGS.map(cardHTML).join('');
   try{
     console.assert(Array.isArray(SONGS) && SONGS.length>0, 'SONGS が空');
     console.assert(SONGS.some(s=>s.id==='song-andante'), 'song-andante が見つからない');
+    console.assert(SONGS.some(s=>s.id==='song-oteyawa' && /中嶋美智代/.test(s.title)), 'song-oteyawa のタイトル更新に失敗');
     var ids=new Set(); let dup=false; for(const s of SONGS){ if(ids.has(s.id)) { dup=true; break;} ids.add(s.id);} 
     console.assert(!dup, '曲ID が重複しています');
     // 追加テスト: すべての曲に title と url が存在
@@ -171,7 +171,7 @@ function inject(){
       if(desc) sBody.insertBefore(wrap,desc); else sBody.prepend(wrap);
       // 「お手やわらかに」だけ注釈
       var cardEl=sBody.closest('.card');
-      if(cardEl && cardEl.id==='song-oteyawa'){
+      if(cardEl && (cardEl.id==='song-oteyawa' || cardEl.id==='song-rasenkaidan')){
         var note=document.createElement('div');
         note.className='yt-note';
         note.textContent='この動画はYoutubeによって自動生成されており、著作権上の問題はありません';
