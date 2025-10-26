@@ -20,10 +20,12 @@
 .song-detail summary>*{position:relative;z-index:1}
 /* 右端固定 */
 .song-detail .hint{grid-column:3;justify-self:end;white-space:nowrap;margin-left:0!important}.song-detail summary::-webkit-details-marker{display:none}.song-detail .chev{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #000;transform-origin:50% 40%;transition:transform .48s cubic-bezier(.25,.8,.25,1),border-top-color .48s ease-out}.song-detail .hint{letter-spacing:.01em;font-size:var(--fs-hint);color:#6c757d}.song-detail .title{font-weight:700;letter-spacing:.01em;font-size:var(--fs-title)}.song-detail[open] .chev{transform:rotate(-180deg)}.song-detail[open] .hint{opacity:0}.song-detail[open]{background:rgba(0,0,0,.03)}.song-detail[open] summary{background:transparent !important;border-radius:8px 8px 0 0;}.song-detail .s-body{padding:.6rem 1.6rem .85rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .48s cubic-bezier(.25,.8,.25,1),opacity .48s ease-out;position:relative}.song-detail[open] .s-body{max-height:none;opacity:1;overflow:visible}.song-detail .s-body p{font-size:var(--fs-body);line-height:1.85;letter-spacing:.01em;margin:0;text-indent:0;padding-left:calc(1em + .6rem);padding-right:calc(1em + .6rem)}.song-detail .s-body .flex-fill{max-width:100%}.rec-inline{display:block;text-align:right;letter-spacing:.01em;font-size:.85rem;font-weight:700;margin:.2rem 0 0 0;line-height:1.4;padding:0}.yt-badge{display:inline-flex;align-items:center;gap:.5rem;background:#000;color:#fff;border-radius:9999px;padding:.45rem .7rem;font-weight:700;line-height:1;text-decoration:none}.yt-badge-abs{position:absolute;right:1rem;bottom:1rem;text-decoration:none}.yt-badge svg{width:18px;height:18px;display:block}.smoro-tip{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;color:#fff;background:var(--brand-yellow);padding:.2rem .6rem;border-radius:9999px;letter-spacing:.02em;box-shadow:0 1px 3px rgba(0,0,0,.08);text-shadow:0 1px 0 rgba(80,40,0,.45),0 2px 4px rgba(0,0,0,.35);margin-left:1em}.btn-playlist{background:var(--brand-yellow);color:#fff!important;border:1px solid rgba(255,255,255,.22);box-shadow:0 2px 6px rgba(0,0,0,.2)}.btn-bottom-home{position:relative;z-index:2}footer{background:#000;color:#fff;padding:28px 0;margin-top:28px;position:relative;z-index:2}footer .footer-note{margin:.25rem 0;text-align:center}.yt-inline-wrap{display:flex;justify-content:center;width:100%;margin:.1rem auto 1rem!important;position:relative;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 6px 16px rgba(0,0,0,.16)}.yt-inline{width:100%;max-width:576px;aspect-ratio:16/9;background:transparent;border:0;border-radius:0;box-shadow:none;display:block;margin:0 auto;position:relative;z-index:1}
-/* インラインプレイヤー用注釈（お手やわらかにのみ） */
+/* インラインプレイヤー用注釈 */
 .yt-note{font-size:.8rem;color:#6c757d;text-align:center;margin:.25rem auto 0;max-width:576px;line-height:1.5}
 /* 今回のカードのみ、注釈下に少し余白を追加 */
 #song-oteyawa .yt-note{margin-bottom:.5rem;}
+/* 「ジーザス！ジーザス！」は本文の注釈は非表示にしてプレイヤー下のみ表示 */
+#song-jesus .rec-inline{display:none !important;}
   .btn-compact{font-size:var(--fs-btn);padding:.55rem 1rem;min-height:44px}
   .song-detail .s-body .flex-fill>*:last-child,.song-detail .s-body p:last-child{margin-bottom:0!important}/* ===== フォント強制: すべて Zen Maru Gothic に統一 ===== */
 :root{ --jp-font: 'Zen Maru Gothic','M PLUS Rounded 1c','Kosugi Maru','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif; }
@@ -75,8 +77,14 @@ const SONGS = [
   {id:"song-andante",title:"アンダンテ / 矢井田瞳",desc:`原作軸の二人をイメージしながら聴いています。スモ←ロで、互いの立場がありながらもずるずると関係を持っている……そんなローさん目線の曲だと思ってます。歌い出しの『あなたは容赦なく正しいことを言う』で、あぁ、スモやんぽいなぁ、と感じて、サビの『本気になんてならなくていい』はローさんの強がり＆立場もあるし半分本音だと思ったらもうスモロにしか思えなくなりました。ぜひ聴いてみてください。`,url:"https://youtu.be/2bpoDP9Ggr4?si=sLhtx4wjAkxXu65O"},
   {id:"song-rasenkaidan",title:"螺旋階段 / 椿屋四重奏",desc:`全体的にPH付近の2人の雰囲気を感じるんですが、『力任せに求めて隙間なく愛で染めて 朝がくれば消えてしまうから』の部分に特にスモロみ感じてます。`,url:"https://youtu.be/m6Zh8noRsVc?si=S-tOx6Sf3j6aIAqX"},
   {id:"song-prologue",title:"プロローグ feat.Aimer / 清水翔太",desc:`『僕の心臓が君に近付く度に何か伝えたそうに』という歌詞など、スモロ感満載ですので推薦したく存じます。`,url:"https://youtu.be/i8qcU9JIprA?si=t5NZdnvNHWHYkL_V"},
-  {id:"song-joenyu",title:"助演女優症2 / back number",desc:`隣にいれないけど、一途に思い続けてるところ`,url:"https://youtu.be/NTsvdtwu29M?si=wnFKfQy0w1EOC2bR"}
-];
+  {id:"song-joenyu",title:"助演女優症2 / back number",desc:`隣にいれないけど、一途に思い続けてるところ`,url:"https://youtu.be/NTsvdtwu29M?si=wnFKfQy0w1EOC2bR"},
+  {id:"song-jesus",title:"ジーザス！ジーザス！/ JUDY AND MARY",desc:`PHイメソンです。
+「そもそもの始まりは、去年のうーんと寒い季節だったわ」
+まずワンフレーズ目がスモロ小説の導入に使いたいほどPHみを感じます。
+この後の歌詞(意訳)も来るはずのない待ち人が眼の前に現れ思わず目を輝かせる=ローの「俺の別荘に(略)」を連想しますし、
+本当にあの２人の関係性は形容しがたい、まさになってみなきゃわからないものだなと。
+曲後半の「死なないで、あたしの夢　消えないで」はロー視点での「海兵は嫌いだが、自分を助けてくれたコラさんやスモーカーのような正義が在り続けること」への願いとも、スモーカーの"海賊は敵"ながら本懐の為破滅的な道を進むローの姿に、死んでくれるなと密かに念ずる気持ちとも読み取れます。<br><span class="rec-inline">公式動画がMusic Premiumメンバーのみの公開となっているため、プレイリストへの追加は見送っております</span>`,url:"https://youtu.be/nW-CDEqFGZg?si=YyXHFgHKLkcQ4NTW"}
+]
 
 function cardHTML(s){
   return `<div class="card p-3 p-md-4 mb-3" id="${s.id}">
@@ -173,11 +181,19 @@ function inject(){
       if(desc) sBody.insertBefore(wrap,desc); else sBody.prepend(wrap);
       // 「お手やわらかに」だけ注釈
       var cardEl=sBody.closest('.card');
-      if(cardEl && (cardEl.id==='song-oteyawa' || cardEl.id==='song-rasenkaidan')){
-        var note=document.createElement('div');
-        note.className='yt-note';
-        note.textContent='この動画はYoutubeによって自動生成されており、著作権上の問題はありません';
-        if(desc) sBody.insertBefore(note,desc); else sBody.appendChild(note);
+      if(cardEl){
+        var noteText = null;
+        if(cardEl.id==='song-oteyawa' || cardEl.id==='song-rasenkaidan'){
+          noteText = 'この動画はYoutubeによって自動生成されており、著作権上の問題はありません';
+        } else if(cardEl.id==='song-jesus'){
+          noteText = '公式動画がMusic Premiumメンバーのみの公開となっているため、プレイリストへの追加は見送っております';
+        }
+        if(noteText){
+          var note=document.createElement('div');
+          note.className='yt-note';
+          note.textContent=noteText;
+          if(desc) sBody.insertBefore(note,desc); else sBody.appendChild(note);
+        }
       }
       a.remove();
     }
