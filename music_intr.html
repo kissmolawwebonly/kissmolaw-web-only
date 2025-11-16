@@ -50,8 +50,7 @@ html, body, body *:not(svg):not(svg *):not(code):not(kbd):not(pre){
 
 </style></head><body><header class="site"><div class="container container-narrow d-flex justify-content-between align-items-center"><div class="brand"><strong class="brand-title">&emsp;曲紹介</strong></div><a class="btn btn-yellow btn-compact cta btn-bottom-home d-inline-flex align-items-center gap-2 header-cta" href="https://youtube.com/playlist?list=PLYYqulEPPCR44hqXyvQwrGzKZiNwofDRS&si=JrCVMddFM3Xkq4JA" target="_blank" rel="noopener"><svg viewBox="0 0 120 84" aria-hidden="true" width="18" height="18" style="flex:0 0 18px"><rect x="0" y="0" width="120" height="84" rx="16" fill="#ff0000"/><polygon points="48,25 48,59 79,42" fill="#ffffff"/></svg><span>プレイリストを聴く</span></a></div></header><main class="section"><div class="container container-narrow" id="cards"></div></main><footer><div class="container container-narrow"><p class="footer-note">本サイトは非公式ファンサイトです</p><p class="footer-note">お問い合わせは主催 <a href="https://x.com/kissmolaw" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Xアカウント</a><br>または <a href="https://bsky.app/profile/kissmolaw.bsky.social" target="_blank" rel="noopener" class="text-reset text-decoration-underline">Blueskyアカウント</a> まで</p></div></footer><script>
 // 曲データ（見た目・順序は既存と同じ）
-const SONGS = [
-  {id:"intro-prisoner",title:"Prisoner Of Love / 宇多田ヒカル",desc:`秘密をさらけ出せないせつない歌詞とメロディがとてもスモロです`,url:"https://youtu.be/6bDyqwwH4Xs?si=5syNttyjmoLWLrri"},
+const SONGS = [  {id:"intro-prisoner",title:"Prisoner Of Love / 宇多田ヒカル",desc:`秘密をさらけ出せないせつない歌詞とメロディがとてもスモロです`,url:"https://youtu.be/6bDyqwwH4Xs?si=5syNttyjmoLWLrri"},
   {id:"song-monshiro",title:"紋白蝶 feat.石原慎也 (Saucy Dog) / TOKYO SKA PARADISE ORCHESTRA",desc:`全体的にかなり現代チックなジャズですが、歌詞中にある、<br>『なんだったんって恋をしよう』<br>『惚れたらきっと負けな気がして 分かってたって君に勝てない』<br>などが、個人的に🚬🐯みを感じるなと。<br>🐯に言ってほしい歌詞もあるし、🚬🐯がお互いに思っていてほしい歌詞もある。<br>海兵と海賊である2人は、お互いに過ちを犯すことを遊び程度と思わせているが、本心ではそう思っていない。🐯を欲しがって🚬を欲しがって、迷いもなく過ちを犯す。ただの未来だから。緩急のあるジャズも🚬🐯に似合うなぁと思っていたり…。<br>モンシロチョウは黒と白の蝶々ですし、心做しか🐯の帽子に似ていたり…。<br>そんな『紋白蝶』が私にとっての🚬🐯イメソンです。`,url:"https://youtu.be/O5VhnfkSjgA?si=bGopRyXByXWczwx4"},
   {id:"song-aimyon",title:"貴方解剖純愛歌 〜死ね〜 / あいみょん",desc:`心臓抜く歌詞が出てくるとついついスモロに置き換えてしまいます`,url:"https://youtu.be/ObCzNAw7dgc?si=87RDyFDhSlRa8PG9"},
   {id:"song-milet",title:"us / milet",desc:`海軍と海賊と言うストレートに気持ちを伝えあえない間柄の二人。<br>曲の最後『この線を越えてしまえば戻れないんだよ』が「境界線」がキーワードな二人にすごくぴったりだと思ってます！`,url:"https://youtu.be/sPdUqkz1kVw?si=ZYevw0uYiz9hYPbk"},
@@ -88,8 +87,10 @@ const SONGS = [
 ,
   {id:"song-home",title:"HOME / 古川本舗",desc:`「境界線」を超えることのできない境遇と、それなのに胸の内に確かにある想いがまさにと感じます。<br>夜が境界線も何もかもを溶かしても、どうしても朝は来てしまう。光が境界線を描くことを憎らしく思いながらも、自らが志す方へ向かわなければいけない。<br>未練溢れる歌詞と清廉な音が二人の胸の内と現実とのコントラストを思わせるような楽曲です。<br><span class='rec-inline'>推薦：水野さん@sui_ke3</span>`,url:"https://youtu.be/gjbXtt1YTyk?si=-sA3bJMXhjUVVZ4d"  },
   {id:"song-hadaka",title:"裸の勇者 / Vaundy",desc:`特にサビの歌詞が…！苦しい世界の中で生きてきた二人が、抗えない愛をそれでも全て抱えていこうとするかのような力強さに「スモロ…！！」となります。`,url:"https://youtu.be/yPdqcADl5U4?si=vv_QWKM-hnvs8fuf"}
+,
+  {id:"song-silly",title:"Silly / 家入レオ",desc:`この曲は「Nのために（原作：湊かなえ）」というドラマの主題歌で、「自分の愛する人のためにならどんなことでもする」という想いが交差していくお話なのですが、PH〜ドレスローザの＜コラさん←ロー←スモーカー＞の構図がまさにピッタリだなと思っています。冒頭『難しいことが多すぎる愛』も決して相容れない立場にいる2人の関係性だなとか、『騙せるのなら　現実なんて　必要じゃない』もPHでドフラミンゴと対峙し自分がどうなってでも守りたい、と嘘をつき続けるスモーカーだなと思っていて、この曲を選びました。相手の想いが自分に向いていない（もうこの世にいない）とわかった上で、それでも自らを犠牲にしていくことの愚かさ（Silly）を理解しつつ、、、というスモロを妄想しています。<br><span class='rec-inline'>推薦：深澄さん@ms8864m_A</span>`,url:"https://youtu.be/Cow8vGHVegs?si=a-aGvQaSFCDNShxA"},
+  {id:"song-003",title:"003 / back number",desc:`ローと身体の関係になれたけどやっぱり心も欲しいスモーカーの葛藤、という感じを妄想しています。このローくんはちょっとやり手な感じです。<br><span class='rec-inline'>推薦：深澄さん@ms8864m_A</span>`,url:"https://www.youtube.com/watch?v=G_ifvcsfAWI"}
 ]
-
 function cardHTML(s){
   return `<div class="card p-3 p-md-4 mb-3" id="${s.id}">
     <div class="d-flex flex-column flex-md-row align-items-start gap-3">
